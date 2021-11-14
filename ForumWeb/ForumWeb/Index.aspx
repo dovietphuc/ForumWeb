@@ -1,8 +1,12 @@
 ﻿<%@ Page Title="Trang chủ" Language="C#" MasterPageFile="~/Layout.Master" AutoEventWireup="true" CodeBehind="Index.aspx.cs" Inherits="ForumWeb.WebForm1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-</asp:Content>
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <script src="js/jquery-3.2.1.slim.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/popper.min.js"></script></asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
     <div class="banner-index">
         <div class="alert alert-primary" role="alert">
             <div class="container">
