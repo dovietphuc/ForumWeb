@@ -4,4 +4,8 @@
     font-family: sans-serif;
     background-color: #c7ecee;
     height: 1000px;
+    box-sizing:border-box;
+}
+a, a:hover{
+    text-decoration:none;
 }
