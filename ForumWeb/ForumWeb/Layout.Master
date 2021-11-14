@@ -32,7 +32,6 @@
         <ul>
             <li><a href="Index.aspx">Trang chủ</a></li>
             <li><a href="#">Giới thiệu</a></li>
-            <li><a href="#">Blog</a></li>
             <li><a href="#">Liên hệ</a></li>
             <li><a runat="server" id="login" class="active" href="Login.aspx">Đăng nhập</a></li>
         </ul>
