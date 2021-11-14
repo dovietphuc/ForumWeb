@@ -9,13 +9,9 @@ namespace ForumWeb.Model
 {
     public class DBConnection
     {
-        string strCon;
-        public DBConnection()
-        {
-            strCon = ConfigurationManager.ConnectionStrings["dbconnect"].ConnectionString;
-        }
+        public static string strCon = ConfigurationManager.ConnectionStrings["dbconnect"].ConnectionString;
 
-        public SqlConnection getConnection()
+        public static SqlConnection getConnection()
         {
             return new SqlConnection(strCon);
         }

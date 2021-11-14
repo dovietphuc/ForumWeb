@@ -6,10 +6,9 @@
 <head runat="server">
     <meta charset="utf-8">
     <meta lang="vi" />
+    <meta name ="viewport" content="width=device-width,initial-scale=1.0" />
 
     <title></title>
-    <asp:ContentPlaceHolder ID="head" runat="server">
-    </asp:ContentPlaceHolder>
 
     <link href="css/all.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/menu.css" />
@@ -24,6 +23,9 @@
             }
         })
     </script>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
 </head>
 <body>
     <nav>
@@ -32,7 +34,7 @@
             <li><a href="#">Giới thiệu</a></li>
             <li><a href="#">Blog</a></li>
             <li><a href="#">Liên hệ</a></li>
-            <li><a class="active" href="Login.aspx">Đăng nhập</a></li>
+            <li><a runat="server" id="login" class="active" href="Login.aspx">Đăng nhập</a></li>
         </ul>
     </nav>
     <div>

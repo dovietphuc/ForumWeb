@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ForumWeb.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +12,7 @@ namespace ForumWeb
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            
         }
     }
 }

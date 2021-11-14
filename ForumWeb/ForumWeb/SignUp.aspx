@@ -8,13 +8,13 @@
             if (pwd != repwd) {
                 alert("Mật khẩu xác nhận không chính xác");
                 return false;
-            }
+            } 
             return true;
         }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <form id="form2" runat="server" method="post" onsubmit="checkSignUp" class="box" >
+    <form id="form2" action="XuLy/XuLySignUp.aspx" runat="server" method="post" onsubmit="return checkSignUp()" class="box" >
         <h2>Đăng ký</h2>
         <div class="login">
             <input name="username" type="text" required>

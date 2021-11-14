@@ -4,7 +4,7 @@
     <link href="css/form.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <form id="form1" runat="server" method="post" class="box">
+    <form id="form1" action="XuLy/XuLyLogin.aspx" runat="server" method="post" class="box">
         <h2>Đăng nhập</h2>
         <div class="login">
             <input name="username" type="text" required>
