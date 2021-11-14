@@ -2,5 +2,10 @@
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-    background-color: #c7ecee;
+    /*background-color: #c7ecee;*/
+  
+    box-sizing:border-box;
+}
+a, a:hover{
+    text-decoration:none;
 }

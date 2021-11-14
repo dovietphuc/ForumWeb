@@ -70,8 +70,14 @@
     <Content Include="css\all.css" />
     <Content Include="css\menu.css" />
     <Content Include="css\form.css" />
+    <Content Include="css\n_css.css" />
     <Content Include="Global.asax" />
     <Content Include="images\lake-district-background.jpg" />
+    <Content Include="css\bootstrap.min.css" />
+    <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\home.js" />
+    <Content Include="js\jquery-3.2.1.slim.min.js" />
+    <Content Include="js\popper.min.js" />
     <Content Include="Login.aspx" />
     <Content Include="SignUp.aspx" />
     <Content Include="Web.config" />
