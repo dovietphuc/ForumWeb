@@ -38,10 +38,24 @@ namespace ForumWeb
         }
         private void LoadDataRptrBlog()
         {
-            
+
+
+            //string sql = "exec select_news_child @CategoryID";
+            //cmd = new SqlCommand(sql, con);
+            //cmd.Parameters.AddWithValue("@CategoryID", Convert.ToInt32(hdfCategoryID.Value));
+
+            //sda = new SqlDataAdapter(cmd);
+            //ds = new DataSet();
+            //sda.Fill(ds);
+
             try
             {
-                SqlDataAdapter sda = new SqlDataAdapter("select * from Blog", con);
+                SqlCommand cmd = new SqlCommand();
+                string sql = "select * from Blog where istatusid = 1";
+                cmd = new SqlCommand(sql, con);
+                //cmd.Parameters.AddWithValue("@CategoryID", Convert.ToInt32(hdfCategoryID.Value));
+
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 sda.Fill(dt);
                 RptBlog.DataSource = dt;
