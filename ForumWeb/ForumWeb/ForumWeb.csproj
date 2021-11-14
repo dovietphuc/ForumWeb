@@ -67,12 +67,65 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="css\all.css" />
+    <Content Include="css\menu.css" />
+    <Content Include="css\form.css" />
+    <Content Include="images\lake-district-background.jpg" />
+    <Content Include="Login.aspx" />
+    <Content Include="SignUp.aspx" />
     <Content Include="Web.config" />
+    <Content Include="Index.aspx" />
+    <Content Include="XuLy\XuLyLogin.aspx" />
+    <Content Include="XuLy\XuLySignUp.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Layout.Master.cs">
+      <DependentUpon>Layout.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layout.Master.designer.cs">
+      <DependentUpon>Layout.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DBConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Index.aspx.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Index.aspx.designer.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SignUp.aspx.cs">
+      <DependentUpon>SignUp.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SignUp.aspx.designer.cs">
+      <DependentUpon>SignUp.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="XuLy\XuLyLogin.aspx.cs">
+      <DependentUpon>XuLyLogin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="XuLy\XuLyLogin.aspx.designer.cs">
+      <DependentUpon>XuLyLogin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="XuLy\XuLySignUp.aspx.cs">
+      <DependentUpon>XuLySignUp.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="XuLy\XuLySignUp.aspx.designer.cs">
+      <DependentUpon>XuLySignUp.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Layout.Master" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -81,6 +134,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
