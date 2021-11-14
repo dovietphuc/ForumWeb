@@ -4,21 +4,19 @@
     <link href="css/form.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <form id="form1" runat="server" method="post">
-        <div class="box">
+    <form id="form1" runat="server" method="post" class="box">
         <h2>Đăng nhập</h2>
         <div class="login">
-            <input type="text" required>
+            <input name="username" type="text" required>
             <label>Tài khoản</label>
         </div>
         <div class="login">
-            <input type="password" required>
+            <input type="password" name="pwd" required>
             <label>Mật khẩu</label>
         </div>
         <input type="submit" value="Đăng nhập">
         <br />
         <a class="sign" href="SignUp.aspx">Bạn chưa có tài khoản? Đăng ký ngay.</a>
-    </div>
     </form>
     
 </asp:Content>
