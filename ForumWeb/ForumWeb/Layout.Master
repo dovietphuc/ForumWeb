@@ -35,11 +35,9 @@
             <li><a class="active" href="Login.aspx">Đăng nhập</a></li>
         </ul>
     </nav>
-    <form id="form1" runat="server" method="post">
-        <div>
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-            </asp:ContentPlaceHolder>
-        </div>
-    </form>
+    <div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
 </body>
 </html>

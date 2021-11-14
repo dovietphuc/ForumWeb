@@ -4,7 +4,8 @@
     <link href="css/form.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="box">
+    <form id="form1" runat="server" method="post">
+        <div class="box">
         <h2>Đăng nhập</h2>
         <div class="login">
             <input type="text" required>
@@ -18,4 +19,6 @@
         <br />
         <a class="sign" href="SignUp.aspx">Bạn chưa có tài khoản? Đăng ký ngay.</a>
     </div>
+    </form>
+    
 </asp:Content>
