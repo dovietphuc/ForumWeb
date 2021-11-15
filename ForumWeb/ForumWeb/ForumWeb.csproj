@@ -67,7 +67,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Blog.aspx" />
+    <Content Include="BlogDetail.aspx" />
     <Content Include="css\all.css" />
     <Content Include="css\menu.css" />
     <Content Include="css\form.css" />
@@ -87,12 +87,12 @@
     <Content Include="XuLy\XuLySignUp.aspx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Blog.aspx.cs">
-      <DependentUpon>Blog.aspx</DependentUpon>
+    <Compile Include="BlogDetail.aspx.cs">
+      <DependentUpon>BlogDetail.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Blog.aspx.designer.cs">
-      <DependentUpon>Blog.aspx</DependentUpon>
+    <Compile Include="BlogDetail.aspx.designer.cs">
+      <DependentUpon>BlogDetail.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
