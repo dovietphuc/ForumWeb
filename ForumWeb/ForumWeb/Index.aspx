@@ -47,7 +47,7 @@
                             </HeaderTemplate>
                             <ItemTemplate>
                                 <div>
-                                    <a href="#<%#Eval("iId")%>"><%#Eval("sName")%></a>
+                                    <a href="/BlogDetail.aspx?Id=<%#Eval("iId")%>"><%#Eval("sName")%></a>
                                     <p><%#Eval("sContent")%></p>
                                 </div>
                             </ItemTemplate>

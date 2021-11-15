@@ -10,7 +10,7 @@
 
 namespace ForumWeb
 {
-    public partial class Blog
+    public partial class BlogDetail
     {
     }
 }
