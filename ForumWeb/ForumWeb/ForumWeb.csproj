@@ -72,6 +72,8 @@
     <Content Include="css\menu.css" />
     <Content Include="css\form.css" />
     <Content Include="css\n_css.css" />
+    <Content Include="file\hello.txt" />
+    <Content Include="file\nhat-th-web-sql.sql" />
     <Content Include="Global.asax" />
     <Content Include="images\lake-district-background.jpg" />
     <Content Include="css\bootstrap.min.css" />
