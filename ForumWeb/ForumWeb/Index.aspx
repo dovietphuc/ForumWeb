@@ -12,7 +12,6 @@
             <div class="container">
                 <div class="row">
                     Xin chào bạn tới trang web này
-
                 </div>
             </div>
         </div>
@@ -23,9 +22,9 @@
                 <div class="col-3">
                     <div class="category-menu">
                         <div class="box-btn">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                            <a href="Upload.aspx" class="btn btn-primary">
                                 Đăng bài
-                            </button>
+                            </a>
                         </div>
                         <asp:Repeater ID="RptCategory" runat="server">
                             <HeaderTemplate>
@@ -59,27 +58,4 @@
             </div>
         </div>
     </div>
-    <!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Đăng bài</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <textarea class="ta-dangbai">
-        </textarea>
-           <input type="file" class="upload-image" id="">
-           <input type="file" class="upload-file" id="">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
 </asp:Content>

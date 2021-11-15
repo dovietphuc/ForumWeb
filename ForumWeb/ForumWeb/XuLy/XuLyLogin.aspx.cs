@@ -50,6 +50,7 @@ namespace ForumWeb.XuLy
             if(i == 1)
             {
                 User user = new User();
+                user.Id = Int32.Parse(dataTable.Rows[0]["iId"].ToString());
                 user.Username = dataTable.Rows[0]["sUserName"].ToString();
                 return user;
             }

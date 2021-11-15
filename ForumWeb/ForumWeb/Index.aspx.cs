@@ -51,7 +51,7 @@ namespace ForumWeb
             try
             {
                 SqlCommand cmd = new SqlCommand();
-                string sql = "select * from Blog where istatusid = 1";
+                string sql = "select * from Blog";
                 cmd = new SqlCommand(sql, con);
                 //cmd.Parameters.AddWithValue("@CategoryID", Convert.ToInt32(hdfCategoryID.Value));
 

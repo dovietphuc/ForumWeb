@@ -69,6 +69,10 @@
   <ItemGroup>
     <Content Include="BlogDetail.aspx" />
     <Content Include="css\all.css" />
+    <Content Include="css\fileinput-rtl.css" />
+    <Content Include="css\fileinput-rtl.min.css" />
+    <Content Include="css\fileinput.css" />
+    <Content Include="css\fileinput.min.css" />
     <Content Include="css\menu.css" />
     <Content Include="css\form.css" />
     <Content Include="css\n_css.css" />
@@ -78,11 +82,63 @@
     <Content Include="images\lake-district-background.jpg" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\fileinput.js" />
+    <Content Include="js\fileinput.min.js" />
     <Content Include="js\home.js" />
     <Content Include="js\jquery-3.2.1.slim.min.js" />
+    <Content Include="js\locales\ar.js" />
+    <Content Include="js\locales\az.js" />
+    <Content Include="js\locales\bg.js" />
+    <Content Include="js\locales\ca.js" />
+    <Content Include="js\locales\cr.js" />
+    <Content Include="js\locales\cs.js" />
+    <Content Include="js\locales\da.js" />
+    <Content Include="js\locales\de.js" />
+    <Content Include="js\locales\el.js" />
+    <Content Include="js\locales\es.js" />
+    <Content Include="js\locales\et.js" />
+    <Content Include="js\locales\fa.js" />
+    <Content Include="js\locales\fi.js" />
+    <Content Include="js\locales\fr.js" />
+    <Content Include="js\locales\gl.js" />
+    <Content Include="js\locales\he.js" />
+    <Content Include="js\locales\hu.js" />
+    <Content Include="js\locales\id.js" />
+    <Content Include="js\locales\it.js" />
+    <Content Include="js\locales\ja.js" />
+    <Content Include="js\locales\ka.js" />
+    <Content Include="js\locales\kr.js" />
+    <Content Include="js\locales\kz.js" />
+    <Content Include="js\locales\LANG.js" />
+    <Content Include="js\locales\lt.js" />
+    <Content Include="js\locales\lv.js" />
+    <Content Include="js\locales\nl.js" />
+    <Content Include="js\locales\no.js" />
+    <Content Include="js\locales\pl.js" />
+    <Content Include="js\locales\pt-BR.js" />
+    <Content Include="js\locales\pt.js" />
+    <Content Include="js\locales\ro.js" />
+    <Content Include="js\locales\ru.js" />
+    <Content Include="js\locales\sk.js" />
+    <Content Include="js\locales\sl.js" />
+    <Content Include="js\locales\sr-latn.js" />
+    <Content Include="js\locales\sv.js" />
+    <Content Include="js\locales\th.js" />
+    <Content Include="js\locales\tr.js" />
+    <Content Include="js\locales\uk.js" />
+    <Content Include="js\locales\uz-cyrl.js" />
+    <Content Include="js\locales\uz.js" />
+    <Content Include="js\locales\vi.js" />
+    <Content Include="js\locales\zh-TW.js" />
+    <Content Include="js\locales\zh.js" />
+    <Content Include="js\plugins\piexif.js" />
+    <Content Include="js\plugins\piexif.min.js" />
+    <Content Include="js\plugins\sortable.js" />
+    <Content Include="js\plugins\sortable.min.js" />
     <Content Include="js\popper.min.js" />
     <Content Include="Login.aspx" />
     <Content Include="SignUp.aspx" />
+    <Content Include="Upload.aspx" />
     <Content Include="Web.config" />
     <Content Include="Index.aspx" />
     <Content Include="XuLy\XuLyLogin.aspx" />
@@ -130,6 +186,13 @@
     <Compile Include="SignUp.aspx.designer.cs">
       <DependentUpon>SignUp.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Upload.aspx.cs">
+      <DependentUpon>Upload.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Upload.aspx.designer.cs">
+      <DependentUpon>Upload.aspx</DependentUpon>
+    </Compile>
     <Compile Include="XuLy\XuLyLogin.aspx.cs">
       <DependentUpon>XuLyLogin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -155,7 +218,10 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\File\" />
+    <Folder Include="App_Data\Image\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

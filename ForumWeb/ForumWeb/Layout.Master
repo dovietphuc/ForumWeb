@@ -12,17 +12,18 @@
     
     <link href="css/all.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/menu.css" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
 
     <link href="css/n_css.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
     <script type="text/javascript">
         $(window).on('scroll', function () {
-            if ($(window).scrollTop() > 50) {
-                $('nav').addClass('black');
-            }
-            else {
-                $('nav').removeClass('black');
-            }
+            //if ($(window).scrollTop() > 50) {
+            //    $('nav').addClass('black');
+            //}
+            //else {
+            //    $('nav').removeClass('black');
+            //}
         })
     </script>
     <script src="js/home.js"></script>
@@ -30,7 +31,7 @@
     </asp:ContentPlaceHolder>
 </head>
 <body>
-    <nav>
+    <nav class="black">
         <ul>
             <li><a href="Index.aspx">Trang chủ</a></li>
             <li><a href="#">Giới thiệu</a></li>

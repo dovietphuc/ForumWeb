@@ -44,7 +44,7 @@
     padding: 10px;
     width: 100px;
     transition: 0.25s;
-    border-radius: 5px
+    border-radius: 5px;
 }
 .box .login input:focus ~ label,
 .box .login input:valid ~ label{
