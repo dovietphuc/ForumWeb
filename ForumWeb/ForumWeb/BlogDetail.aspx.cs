@@ -35,7 +35,7 @@ namespace ForumWeb
             con.Open();
             try
             {
-                string sql = "select * from Blog where istatusid = 1 and iId = @id";
+                string sql = "select * from Blog where iId = @id";
                 cmd = new SqlCommand(sql, con);
                 cmd.Parameters.AddWithValue("@id", Convert.ToInt32(blogId));
 

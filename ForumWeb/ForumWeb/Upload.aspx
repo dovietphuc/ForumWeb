@@ -1,20 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Layout.Master" AutoEventWireup="true" CodeBehind="Upload.aspx.cs" Inherits="ForumWeb.Upload" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.min.css" crossorigin="anonymous">
-    <link href="../css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" crossorigin="anonymous">
-    <link href="../themes/explorer-fas/theme.css" media="all" rel="stylesheet" type="text/css" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
-    <script src="../js/plugins/piexif.js" type="text/javascript"></script>
-    <script src="../js/plugins/sortable.js" type="text/javascript"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script src="../js/fileinput.js" type="text/javascript"></script>
-    <script src="../js/locales/fr.js" type="text/javascript"></script>
-    <script src="../js/locales/es.js" type="text/javascript"></script>
-    <script src="../themes/fas/theme.js" type="text/javascript"></script>
-    <script src="../themes/explorer-fas/theme.js" type="text/javascript"></script>
     <style>
         form {
             background-color: #f1f1f1;
