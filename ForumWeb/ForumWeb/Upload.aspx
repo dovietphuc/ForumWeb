@@ -40,7 +40,7 @@
 
         .cancel {
             display: inline-block;
-            background-color: #b60000;
+            background-color: #ff0000;
             padding: 10px;
             transition: 0.25s;
             border-radius: 5px;
@@ -52,7 +52,7 @@
 
             .cancel:hover {
                 background-color: #000000;
-                color: #b60000;
+                color: #ff0000;
                 text-decoration: none;
             }
 

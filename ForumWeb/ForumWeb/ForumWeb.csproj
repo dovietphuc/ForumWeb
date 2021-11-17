@@ -67,6 +67,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="UserAvt\default_avt.svg" />
     <Content Include="BlogDetail.aspx" />
     <Content Include="css\all.css" />
     <Content Include="css\fileinput-rtl.css" />
@@ -79,7 +80,6 @@
     <Content Include="file\hello.txt" />
     <Content Include="file\nhat-th-web-sql.sql" />
     <Content Include="Global.asax" />
-    <Content Include="images\lake-district-background.jpg" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\fileinput.js" />
@@ -227,8 +227,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\File\" />
-    <Folder Include="App_Data\Image\" />
+    <Folder Include="Image\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

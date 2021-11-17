@@ -39,7 +39,7 @@ namespace ForumWeb.XuLy
             SqlCommand sqlCommand = connection.CreateCommand();
             sqlCommand.CommandText = query;
             sqlCommand.Parameters.AddWithValue("@sUserName", ussername);
-            sqlCommand.Parameters.AddWithValue("@sHashedPassword", pwd);
+            sqlCommand.Parameters.AddWithValue("@sHashedPassword", pwd.GetHashCode());
             connection.Open();
             int i = sqlCommand.ExecuteNonQuery();
             connection.Close();

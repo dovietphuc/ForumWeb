@@ -43,7 +43,7 @@ namespace ForumWeb.XuLy
             SqlCommand sqlCommand = connection.CreateCommand();
             sqlCommand.CommandText = query;
             sqlCommand.Parameters.AddWithValue("@username", ussername);
-            sqlCommand.Parameters.AddWithValue("@pwd", pwd);
+            sqlCommand.Parameters.AddWithValue("@pwd", pwd.GetHashCode());
             SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlCommand);
             DataTable dataTable = new DataTable();
             int i = dataAdapter.Fill(dataTable);
@@ -52,6 +52,10 @@ namespace ForumWeb.XuLy
                 User user = new User();
                 user.Id = Int32.Parse(dataTable.Rows[0]["iId"].ToString());
                 user.Username = dataTable.Rows[0]["sUserName"].ToString();
+                user.Fullname = dataTable.Rows[0]["sName"].ToString();
+                user.Email = dataTable.Rows[0]["sEmail"].ToString();
+                user.Phone = dataTable.Rows[0]["sPhone"].ToString();
+                user.CreateTime = (DateTime)dataTable.Rows[0]["dCreatedDate"];
                 return user;
             }
             return null;
