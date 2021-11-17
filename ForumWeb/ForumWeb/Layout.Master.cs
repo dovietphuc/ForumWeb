@@ -14,6 +14,7 @@ namespace ForumWeb
         {
             User user = (User)Application["user"];
             login.InnerText = user != null ? "Đăng xuất" : "Đăng nhập";
+            profile.Visible = user != null;
         }
     }
 }

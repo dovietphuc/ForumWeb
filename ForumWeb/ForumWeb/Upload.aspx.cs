@@ -73,7 +73,7 @@ namespace ForumWeb
                     
                     foreach (HttpPostedFile postedFile in iUpload.PostedFiles)
                     {
-                        string fileName = "~/App_Data/Image/" + postedFile.FileName;
+                        string fileName = "~/App_Data/Image/" + user.Username + "_" + (DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond);
                         string filepath = MapPath(fileName);
                         postedFile.SaveAs(filepath);
                         SqlCommand cmd = connection.CreateCommand();
@@ -95,7 +95,7 @@ namespace ForumWeb
 
                     foreach (HttpPostedFile postedFile in fUpload.PostedFiles)
                     {
-                        string fileName = "~/App_Data/File/" + postedFile.FileName;
+                        string fileName = "~/App_Data/File/" + user.Username + "_" + (DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond);
                         string filepath = MapPath(fileName);
                         postedFile.SaveAs(filepath);
                         SqlCommand cmd = connection.CreateCommand();
