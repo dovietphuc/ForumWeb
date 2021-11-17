@@ -55,13 +55,11 @@
                 color: #ff0000;
                 text-decoration: none;
             }
-    </style>
-    <script type="text/javascript">
-        function onSelectImage(src) {
-            let image = document.getElementById("imageAvt");
-            image.src = src;
+
+        .hidden {
+            display: none;
         }
-    </script>
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <form id="form_updateprofile" runat="server">
@@ -71,10 +69,10 @@
 
                 <div class="wrap">
                     <div>
-                        <label style="cursor: pointer;">
-                            <img src="UserAvt/default_avt.svg" id="imageAvt" style="width: 100px; background-color: #000; padding: 3px;" />
-                            <asp:FileUpload ID="fileAvt" runat="server" style="display: none;" accept=".png,.jpg,.jpeg" onchange="onSelectImage(this.file.mozFullPath)" />
-                        </label>
+                        <img src="UserAvt/default_avt.svg" id="imageAvt" runat="server" style="width: 100px; background-color: #000; padding: 3px;" />
+                        <asp:FileUpload ID="fileAvt" runat="server" accept=".png,.jpg,.jpeg" />
+                        <br />
+                        <asp:Button ID="btnLoadImage" runat="server" CssClass="action" Text="Tải ảnh lên" OnClick="btnLoadImage_Click" />
                     </div>
                     <div>
                         <label>Tài khoản:</label>
@@ -135,6 +133,9 @@
                     </div>
                 </div>
             </ContentTemplate>
+            <Triggers>
+                <asp:PostBackTrigger ControlID="btnLoadImage" />
+            </Triggers>
         </asp:UpdatePanel>
     </form>
 </asp:Content>

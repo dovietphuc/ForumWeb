@@ -36,8 +36,11 @@ namespace ForumWeb
                 txtEmail.Text = user.Email;
                 txtPhone.Text = user.Phone;
                 txtTimeCreate.Value = user.CreateTime.ToString("dd/MM/yyyy");
+                if (!String.IsNullOrEmpty(user.Avatar))
+                {
+                    imageAvt.Src = user.Avatar;
+                }
 
-                
             }
         }
 
@@ -111,6 +114,39 @@ namespace ForumWeb
             int i = cmd.ExecuteNonQuery();
             connection.Close();
             return i > 0;
+        }
+
+        protected void btnLoadImage_Click(object sender, EventArgs e)
+        {
+            updateAvatar();
+        }
+
+        public bool updateAvatar()
+        {
+            if (fileAvt.HasFile)
+            {
+                string fileName = "~/UserAvt/" + user.Username + "_avt" + fileAvt.FileName;
+                string filepath = MapPath(fileName);
+                fileAvt.SaveAs(filepath);
+
+                string query = "UPDATE [dbo].[User]"
+                                    + " SET [sAvatarUrl] = @path"
+                                    + " WHERE iId = @id";
+                SqlConnection connection = DBConnection.getConnection();
+                SqlCommand cmd = connection.CreateCommand();
+                cmd.CommandText = query;
+                cmd.Parameters.AddWithValue("@path", fileName);
+                cmd.Parameters.AddWithValue("@id", user.Id);
+                connection.Open();
+                int i = cmd.ExecuteNonQuery();
+                connection.Close();
+                if(i > 0)
+                {
+                    imageAvt.Src = fileName;
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

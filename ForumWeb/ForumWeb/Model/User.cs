@@ -13,5 +13,6 @@ namespace ForumWeb.Model
         public string Email { get; set; }
         public string Phone { get; set; }
         public DateTime CreateTime { get; set; }
+        public string Avatar { get; set; }
     }
 }

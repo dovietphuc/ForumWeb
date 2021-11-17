@@ -56,6 +56,7 @@ namespace ForumWeb.XuLy
                 user.Email = dataTable.Rows[0]["sEmail"].ToString();
                 user.Phone = dataTable.Rows[0]["sPhone"].ToString();
                 user.CreateTime = (DateTime)dataTable.Rows[0]["dCreatedDate"];
+                user.Avatar = dataTable.Rows[0]["sAvatarUrl"].ToString();
                 return user;
             }
             return null;
