@@ -22,14 +22,17 @@
             <div class="row">
                 <div class="col-3">
                     <div class="user">
-                        <div class="box-btn">
-                           \
-                        </div>
                         <asp:Repeater ID="RptUser" runat="server">
                             <ItemTemplate>
-
+                                <div class="box-image pb-2">
+                                    <img class="w-75" src="<%#Eval("sAvatarUrl")%>" alt="<%#Eval("sName")%>" />
+                                </div>
+                                <div class="box-name">
+                                     <p class="text-capitalize">Tên: <%#Eval("sName")%></p>
+                                </div>
                                 <div>
-                                    <a href="#<%#Eval("iId")%>"><%#Eval("sName")%></a>
+                                   Ngày tham gia: <%#Eval("dCreatedDate", "{0:dd/MM/yyyy}")%>
+                                    <%-- <p><%# Eval("dCreatedDate","{0:dd/MM/yyyy}") %></p>--%>
                                 </div>
                             </ItemTemplate>
                         </asp:Repeater>

@@ -23,6 +23,7 @@ namespace ForumWeb
             if (IsPostBack) return;
             LoadDataRptrBlog();
             LoadDataBlogFile();
+            LoadDataRptrUser();
         }
         private void LoadDataRptrBlog()
         {
@@ -57,8 +58,6 @@ namespace ForumWeb
 
             sda = new SqlDataAdapter(cmd);
             ds = new DataSet();
-
-
             try
             {
                 sda.SelectCommand = cmd;
@@ -66,20 +65,17 @@ namespace ForumWeb
                 var data = ds.Tables[0].Rows;
                 for (int i = 0; i < data.Count; i++)
                 {
-                    contentFile.InnerHtml += @"<div><a href='/FileExplorer.aspx?txtFile=" + ds.Tables[0].Rows[i]["surl"].ToString().Remove(0,5) 
-                        + "'>" + ds.Tables[0].Rows[i]["surl"].ToString().Remove(0, 5) + @"</a></div>";
+                    contentFile.InnerHtml += @"<div><a href='/FileExplorer.aspx?txtFile=" 
+                        + ds.Tables[0].Rows[i]["surl"].ToString().Remove(0,5) 
+                        + "'>" + ds.Tables[0].Rows[i]["surl"].ToString().Remove(0, 5) 
+                        + @"</a></div>";
                 }
             }
             catch (Exception e)
             {
 
-                Response.Write(e);
+                Console.Write(e);
             }
-                
-            
-
-
-           
         }
         protected void RptBlog_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
@@ -101,8 +97,29 @@ namespace ForumWeb
                 RptImages.DataBind();
 
                 con.Close();
-
             }
+        }
+        private void LoadDataRptrUser()
+        {
+
+            var blogId = Request.QueryString["Id"];
+            try
+            {
+                string sql = "exec select_user_by_idBlog @blogId";
+                cmd = new SqlCommand(sql, con);
+                cmd.Parameters.AddWithValue("@blogId", Convert.ToInt32(blogId));
+
+                sda = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                sda.Fill(dt);
+                RptUser.DataSource = dt;
+                RptUser.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Response.Write(ex.Message);
+            }
+
         }
     }
 }
