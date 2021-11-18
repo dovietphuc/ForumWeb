@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -18,20 +19,15 @@ namespace ForumWeb
         DataSet ds = new DataSet();
         protected void Page_Load(object sender, EventArgs e)
         {
+            
             if (IsPostBack) return;
             LoadDataRptrBlog();
+            LoadDataBlogFile();
         }
         private void LoadDataRptrBlog()
         {
 
             var blogId = Request.QueryString["Id"];
-            //string sql = "exec select_news_child @CategoryID";
-            //cmd = new SqlCommand(sql, con);
-            //cmd.Parameters.AddWithValue("@CategoryID", Convert.ToInt32(hdfCategoryID.Value));
-
-            //sda = new SqlDataAdapter(cmd);
-            //ds = new DataSet();
-            //sda.Fill(ds);
             con.Open();
             try
             {
@@ -50,6 +46,40 @@ namespace ForumWeb
                 Response.Write(ex.Message);
             }
 
+        }
+        private void LoadDataBlogFile()
+        {
+
+            var blogId = Request.QueryString["Id"];
+            string sql = "select * from Fliles where iblogid = @iId";
+            cmd = new SqlCommand(sql, con);
+            cmd.Parameters.AddWithValue("@iId", Convert.ToInt32(blogId));
+
+            sda = new SqlDataAdapter(cmd);
+            ds = new DataSet();
+
+
+            try
+            {
+                sda.SelectCommand = cmd;
+                sda.Fill(ds, "reg");
+                var data = ds.Tables[0].Rows;
+                for (int i = 0; i < data.Count; i++)
+                {
+                    contentFile.InnerHtml += @"<div><a href='/FileExplorer.aspx?txtFile=" + ds.Tables[0].Rows[i]["surl"].ToString().Remove(0,5) 
+                        + "'>" + ds.Tables[0].Rows[i]["surl"].ToString().Remove(0, 5) + @"</a></div>";
+                }
+            }
+            catch (Exception e)
+            {
+
+                Response.Write(e);
+            }
+                
+            
+
+
+           
         }
         protected void RptBlog_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
