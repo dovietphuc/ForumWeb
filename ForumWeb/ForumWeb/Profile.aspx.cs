@@ -143,6 +143,7 @@ namespace ForumWeb
                 if(i > 0)
                 {
                     imageAvt.Src = fileName;
+                    user.Avatar = fileName;
                     return true;
                 }
             }
