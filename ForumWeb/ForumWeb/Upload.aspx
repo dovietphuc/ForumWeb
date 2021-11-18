@@ -70,7 +70,7 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <form id="uploadform" runat="server">
+    <form id="uploadform" runat="server" enctype="multipart/form-data">
         <label>Thể loại</label><br />
         <asp:ListBox ID="ListBoxCategories" CssClass="listbox" runat="server" DataSourceID="CategoriesDataSource" DataTextField="sName" DataValueField="iId" />
         <asp:SqlDataSource ID="CategoriesDataSource" runat="server"
