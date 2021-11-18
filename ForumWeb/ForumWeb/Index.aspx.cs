@@ -17,14 +17,18 @@ namespace ForumWeb
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack) return;
+
             LoadDataRptrCategories();
-            LoadDataRptrBlog();
+
+            int categoryid = Int32.Parse(Request.QueryString["categoryid"] != null ? Request.QueryString["categoryid"] : "-1" );
+
+            LoadDataRptrBlog(categoryid);
         }
         private void LoadDataRptrCategories()
         {
             try
             {
-                SqlDataAdapter sda = new SqlDataAdapter("select * from BlogType", con);
+                SqlDataAdapter sda = new SqlDataAdapter("select * from BlogType WHERE iParentBlogTypeId IS NULL", con);
                 DataTable dt = new DataTable();
                 sda.Fill(dt);
                 RptCategory.DataSource = dt;
@@ -34,27 +38,28 @@ namespace ForumWeb
             {
                 Response.Write(ex.Message);
             }
-
         }
-        private void LoadDataRptrBlog()
+        private void LoadDataRptrBlog(int categoryid = -1)
         {
-
-
-            //string sql = "exec select_news_child @CategoryID";
-            //cmd = new SqlCommand(sql, con);
-            //cmd.Parameters.AddWithValue("@CategoryID", Convert.ToInt32(hdfCategoryID.Value));
-
-            //sda = new SqlDataAdapter(cmd);
-            //ds = new DataSet();
-            //sda.Fill(ds);
-
             try
             {
                 SqlCommand cmd = new SqlCommand();
                 string sql = "select * from Blog";
-                cmd = new SqlCommand(sql, con);
-                //cmd.Parameters.AddWithValue("@CategoryID", Convert.ToInt32(hdfCategoryID.Value));
-
+                cmd = con.CreateCommand();
+                if (categoryid != -1)
+                {
+                    List<int> childs = getSubTypesForParent(categoryid);
+                    sql += " WHERE iBlogTypeId = @categoryid";
+                    if (childs != null)
+                    {
+                        foreach (int child in childs)
+                        {
+                            sql += " OR iBlogTypeId = " + child;
+                        }
+                    }
+                    cmd.Parameters.AddWithValue("@categoryid", categoryid);
+                }
+                cmd.CommandText = sql;
                 SqlDataAdapter sda = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 sda.Fill(dt);
@@ -65,7 +70,63 @@ namespace ForumWeb
             {
                 Response.Write(ex.Message);
             }
+        }
 
+        private List<int> getSubTypesForParent(int parentId)
+        {
+            try
+            {
+                string query = "select * from BlogType WHERE iParentBlogTypeId = @parentid";
+                SqlCommand cmd = con.CreateCommand();
+                cmd.CommandText = query;
+                cmd.Parameters.AddWithValue("@parentid", parentId);
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                int i = sda.Fill(dt);
+                if(i > 0)
+                {
+                    List<int> childs = new List<int>();
+                    foreach(DataRow row in dt.Rows)
+                    {
+                        childs.Add(Int32.Parse(row["iId"].ToString()));
+                    }
+                    return childs;
+                } else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Response.Write(ex.Message);
+                return null;
+            }
+        }
+
+        protected void RptCategory_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                Repeater childRepeater = (Repeater)e.Item.FindControl("RptSubCategory");
+                int parentCategoryid = (int)((DataRowView)e.Item.DataItem)["iId"];
+
+                try
+                {
+                    string query = "select * from BlogType WHERE iParentBlogTypeId = @parentid";
+                    SqlCommand cmd = con.CreateCommand();
+                    cmd.CommandText = query;
+                    cmd.Parameters.AddWithValue("@parentid", parentCategoryid);
+                    SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    sda.Fill(dt);
+                    childRepeater.DataSource = dt;
+                    childRepeater.DataBind();
+                }
+                catch (Exception ex)
+                {
+                    Response.Write(ex.Message);
+                }
+            }
         }
     }
 }
