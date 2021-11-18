@@ -83,7 +83,7 @@
         <textarea name="txtContent" id="txtContent" runat="server" required="required" placeholder="Nội dung"></textarea>
         <hr />
         <label>Thêm ảnh</label><br />
-        <asp:FileUpload ID="iUpload" runat="server" AllowMultiple="true" />
+        <asp:FileUpload ID="iUpload" runat="server" accept=".png,.jpg,.jpeg" AllowMultiple="true" />
         <hr />
         <label>Thêm tệp đính kèm</label><br />
         <asp:FileUpload ID="fUpload" runat="server" AllowMultiple="true" />

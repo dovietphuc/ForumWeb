@@ -66,7 +66,6 @@
         <asp:ScriptManager runat="server" ID="sm" />
         <asp:UpdatePanel runat="server" ID="updatePanel">
             <ContentTemplate>
-
                 <div class="wrap">
                     <div>
                         <img src="UserAvt/default_avt.svg" id="imageAvt" runat="server" style="width: 100px; background-color: #000; padding: 3px;" />

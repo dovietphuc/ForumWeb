@@ -125,7 +125,7 @@ namespace ForumWeb
         {
             if (fileAvt.HasFile)
             {
-                string fileName = "UserAvt/" + user.Username + "_avt" + fileAvt.FileName;
+                string fileName = "UserAvt/" + user.Username + "_avt" + fileAvt.FileName.Replace(" ", "");
                 string filepath = MapPath("~/" + fileName);
                 fileAvt.SaveAs(filepath);
 
