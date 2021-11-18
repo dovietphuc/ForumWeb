@@ -125,8 +125,8 @@ namespace ForumWeb
         {
             if (fileAvt.HasFile)
             {
-                string fileName = "~/UserAvt/" + user.Username + "_avt" + fileAvt.FileName;
-                string filepath = MapPath(fileName);
+                string fileName = "UserAvt/" + user.Username + "_avt" + fileAvt.FileName;
+                string filepath = MapPath("~/" + fileName);
                 fileAvt.SaveAs(filepath);
 
                 string query = "UPDATE [dbo].[User]"
