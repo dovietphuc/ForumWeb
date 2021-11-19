@@ -19,17 +19,50 @@
         }
 
         .blog-item {
-            border-bottom: 1px solid #808080;
             padding-top: 15px;
         }
 
-        .category-item-level-2{
-            margin-left: 30px;
+        [class^="category-item-level-"] {
+            list-style: none;
+            padding: 10px;
+        }
+
+        .category-item-level-2 {
+            padding-left: 30px;
+        }
+
+        .sub-link {
+            background-color: #f1f1f1;
+            display: inline-block;
+            padding: 5px 10px;
+            margin-bottom: 10px;
+            border-radius: 6px 24px 24px 6px;
+        }
+
+        .btn {
+            display: block;
+            background-color: #007bff;
+            color: #fff;
+            width: 100%;
+        }
+
+        .avatar {
+            background-color: #000;
+            width: 50px;
+            height: 50px;
+            margin: 10px;
+        }
+
+        .blog-sub-link {
+            background-color: burlywood;
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 24px 6px 6px 24px;
+            float: right;
         }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
     <div class="banner-index">
         <div class="alert alert-primary" role="alert">
             <div class="container">
@@ -48,6 +81,10 @@
                     </div>
                     <div class="category-menu">
                         <asp:Repeater ID="RptCategory" runat="server" OnItemDataBound="RptCategory_ItemDataBound">
+                            <HeaderTemplate>
+                                <li class="category-item-level-0">
+                                    <a href="Index.aspx">Tất cả</a>
+                            </HeaderTemplate>
                             <ItemTemplate>
                                 <li class="category-item-level-1">
                                     <a href="Index.aspx?categoryid=<%#Eval("iId")%>"><%#Eval("sName")%></a>
@@ -60,20 +97,47 @@
                                     </asp:Repeater>
                                 </li>
                             </ItemTemplate>
+                            <FooterTemplate>
+                                </li>
+                            </FooterTemplate>
                         </asp:Repeater>
                     </div>
                 </div>
                 <div class="col-9">
-                    <div class="content">
-                        <asp:Repeater ID="RptBlog" runat="server">
-                            <ItemTemplate>
-                                <div class="blog-item">
-                                    <a href="/BlogDetail.aspx?Id=<%#Eval("iId")%>"><%#Eval("sName")%></a>
-                                    <p><%#Eval("sContent")%></p>
-                                </div>
-                            </ItemTemplate>
-                        </asp:Repeater>
+                    <div id="headerLink" class="sub-link" runat="server">
                     </div>
+                    <form id="form1" runat="server">
+                        <asp:ScriptManager runat="server" ID="sm" />
+                        <asp:UpdatePanel runat="server" ID="updatePanel">
+                            <ContentTemplate>
+                                <div class="content">
+                                    <asp:Repeater ID="RptBlog" runat="server" OnItemDataBound="RptBlog_ItemDataBound">
+                                        <ItemTemplate>
+                                            <div class="blog-item">
+                                                <div style="float: left">
+                                                    <asp:Image ID="imgAvatar" runat="server" ImageUrl="UserAvt/default_avt.svg" CssClass="avatar" />
+                                                </div>
+                                                <div>
+                                                    <div id="blogTypeLink" class="blog-sub-link" runat="server">
+                                                    </div>
+                                                    <a class="title" id="txtNguoiDang" runat="server" href="#">Người đăng</a> - 
+                                                    <a class="title" href="/BlogDetail.aspx?Id=<%#Eval("iId")%>"><%#Eval("sName")%></a> - 
+                                                    <span class="title" style="font-size: small;"><%#((DateTime)Eval("dCreatedDate")).ToString("dd/MM/yyyy")%></span>
+                                                    <p><%#Eval("sContent").ToString().Trim().Substring(0, 149)%>...</p>
+                                                    <div style="font-size: small;">
+                                                        <span id="cmtCount" runat="server">0 bình luận</span> - 
+                                                        <span><%#Eval("iViewCount")%> lượt xem</span>
+                                                    </div>
+                                                </div>
+                                                <hr />
+                                            </div>
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                    <asp:Button ID="btnLoadMore" CssClass="btn" runat="server" Text="Tải thêm" OnClick="btnLoadMore_Click" />
+                                </div>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
+                    </form>
                 </div>
             </div>
         </div>

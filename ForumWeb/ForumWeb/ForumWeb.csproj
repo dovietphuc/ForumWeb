@@ -179,6 +179,7 @@
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Model\BlogType.cs" />
     <Compile Include="Model\DBConnection.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Profile.aspx.cs">

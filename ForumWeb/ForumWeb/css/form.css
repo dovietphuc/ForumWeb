@@ -2,10 +2,7 @@
 .box{
     width: 400px;
     padding: 40px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    margin: 50px auto;
     background-color: rgba(0, 0, 0, 0.8);
     box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.5);
     border-radius: 10px;

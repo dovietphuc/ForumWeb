@@ -68,7 +68,7 @@
             <ContentTemplate>
                 <div class="wrap">
                     <div>
-                        <img src="UserAvt/default_avt.svg" id="imageAvt" runat="server" style="width: 100px; background-color: #000; padding: 3px;" />
+                        <img src="UserAvt/default_avt.svg" id="imageAvt" runat="server" style="width: 100px; height: 100px; background-color: #000; padding: 3px;" />
                         <asp:FileUpload ID="fileAvt" runat="server" accept=".png,.jpg,.jpeg" />
                         <br />
                         <asp:Button ID="btnLoadImage" runat="server" CssClass="action" Text="Tải ảnh lên" OnClick="btnLoadImage_Click" />

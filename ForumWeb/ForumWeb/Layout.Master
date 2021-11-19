@@ -44,5 +44,13 @@
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
         </asp:ContentPlaceHolder>
     </div>
+    <footer style="text-align: center; background-color: #f1f1f1; padding: 24px; margin-top: 24px;">
+        <p>
+            Lập trình web nâng cao 2021<br />
+            Đỗ Việt Phúc<br />
+            Hồ Long Nhật<br />
+            Hoàng Thanh Thúy
+        </p>
+    </footer>
 </body>
 </html>
