@@ -13,3 +13,6 @@ a, a:hover{
     background-color: rgba(0, 0, 0, 0.6);
     color:#fff;
 }
+.box-cmt{
+    border-top:1px solid gray;
+}

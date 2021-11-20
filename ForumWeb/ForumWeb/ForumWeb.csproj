@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Image\67819780_861114670928894_4974516257068941312_o.jpg" />
+    <Content Include="css\font-awesome.css" />
     <Content Include="FileExplorer.aspx" />
     <Content Include="Image\emptyAvatar.jpg" />
     <Content Include="UserAvt\default_avt.svg" />

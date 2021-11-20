@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 namespace ForumWeb
@@ -173,8 +174,17 @@ namespace ForumWeb
 
                 con.Open();
                 int res = cmd.ExecuteNonQuery();
+                if (res > 0)
+                {
+                    LoadDataRptrComment();
+                    taComment.Value = "";
+                }
+                else
+                {
 
-                LoadDataRptrComment();
+                }
+             
+
             }
             else
             {
@@ -184,7 +194,78 @@ namespace ForumWeb
 
         protected void btnCancel_Click(object sender, EventArgs e)
         {
+            Button button = (Button)sender;
+            var a = button.Text;
             taComment.Value = "";
+        }
+
+        protected void RptCmt_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
+            {
+                try
+                {
+                    // lấy thằng id user
+                    var cmtID = (Label)e.Item.FindControl("cmtID");
+                    var RptChildComment = (Repeater)e.Item.FindControl("RptChildComment");
+
+                    string sql = "exec select_comment_by_iParentcommentId  @iParentcommentId";
+                    cmd = new SqlCommand(sql, con);
+                    cmd.Parameters.AddWithValue("@iParentcommentId", Convert.ToInt32(cmtID.Text));
+
+                    sda = new SqlDataAdapter(cmd);
+                    ds = new DataSet();
+                    sda.Fill(ds);
+
+                    RptChildComment.DataSource = ds;
+                    RptChildComment.DataBind();
+
+                    con.Close();
+                }
+                catch (Exception)
+                {
+
+                    
+                }
+            }
+        }
+
+        protected void cbAproved_Command_Rep(object sender, CommandEventArgs e)
+        {
+            LinkButton linkButton = (LinkButton)sender;
+            var id = linkButton.Attributes["Tagkey"];
+            string textareaValue = "";
+            for (int i = 0; i < RptComment.Items.Count; i++)
+            {
+                HtmlTextArea currentTextArea = (HtmlTextArea)RptComment.Items[i].FindControl("taChildComment");
+                if (currentTextArea.Value.Length > 0)
+                {
+                   textareaValue = currentTextArea.Value; //Get the textareavalue
+                }
+            }
+            //HtmlTextArea currentTextArea = (HtmlTextArea)RptComment.Items[0].FindControl("taChildComment");
+
+            //var blogId = Request.QueryString["Id"];
+            user = (User)Session["user"];
+            if (user != null)
+            {
+                SqlCommand cmd = new SqlCommand("create_child_comment", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                //string sql = "exec create_comment @blogId, @userId,@content";
+                //cmd = new SqlCommand(sql, con);
+                cmd.Parameters.AddWithValue("@blogId", Convert.ToInt32(id));
+                cmd.Parameters.AddWithValue("@userId", Convert.ToInt32(user.Id));
+                cmd.Parameters.AddWithValue("@content", textareaValue);
+
+                con.Open();
+                int res = cmd.ExecuteNonQuery();
+
+                LoadDataRptrComment();
+            }
+            else
+            {
+                Response.Redirect("Login.aspx");
+            }
         }
     }
 }
