@@ -37,6 +37,27 @@
         .textarea {
             resize: none
         }
+
+        .content, .user {
+            background-color: #f1f1f1;
+            padding: 10px;
+            border-radius: 12px;
+        }
+
+        .comment-level-1{
+            border-bottom: 1px solid gray;
+        }
+
+        .comment-level-2 {
+            border-left: 1px solid gray;
+        }
+
+        .box-cmt {
+            border: 1px solid gray;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 12px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
@@ -107,7 +128,7 @@
                                             <ItemTemplate>
                                                 <asp:Label ID="cmtID" runat="server" Visible="false" Text='<%#Eval("iId")%>'></asp:Label>
 
-                                                <div class="bg-white p-2">
+                                                <div class="comment-level-1 bg-white p-2">
                                                     <div class="d-flex flex-row user-info">
                                                         <img class="rounded-circle" src="<%#Eval("sAvatarUrl").ToString()==""?"Image/emptyAvatar.jpg":Eval("sAvatarUrl")%>" width="40">
                                                         <div class="d-flex flex-column justify-content-start ml-2">
@@ -122,11 +143,11 @@
                                                         <div class="d-flex flex-row fs-12">
                                                             <div class="like cursor action-collapse" data-toggle="collapse" aria-expanded="true" aria-controls="cp-<%#Eval("iId")%>" href="#cp-<%#Eval("iId")%>">
                                                                 <i class="fa fa-commenting-o"></i>
-                                                                <span class="ml-1">Comment</span>
+                                                                <span class="ml-1">Trả lời</span>
                                                             </div>
                                                         </div>
                                                         <%-- box-child-cmt --%>
-                                                        <div class="box-child-cmt pl-4 pt-3">
+                                                        <div class="comment-level-2 box-child-cmt pl-4 pt-3">
                                                             <asp:Repeater ID="RptChildComment" runat="server">
                                                                 <ItemTemplate>
                                                                     <div class="d-flex flex-row user-info">
@@ -151,11 +172,11 @@
 
                                                         </div>
                                                         <div class="mt-2 text-right">
-                                                            <asp:LinkButton ID="LinkButton1" Tagkey='<%#Eval("iId")%>' Text='reply comment' runat="server"
+                                                            <asp:LinkButton ID="LinkButton1" Tagkey='<%#Eval("iId")%>' Text='Trả lời' runat="server"
                                                                 OnCommand="cbAproved_Command_Rep"
                                                                 CssClass="btn btn-primary btn-sm shadow-none"></asp:LinkButton>
                                                             <%--<button class="btn btn-primary btn-sm shadow-none" type="button">reply comment</button>--%>
-                                                            <button class="btn btn-outline-primary btn-sm ml-1 shadow-none" type="button">Cancel</button>
+                                                            <button class="btn btn-outline-primary btn-sm ml-1 shadow-none" type="button">Hủy</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -165,13 +186,13 @@
 
                                     <div class="bg-light p-2">
                                         <div class="d-flex flex-row align-items-start">
-                                            <asp:Image ID="imgAvartar" CssClass="rounded-circle" Width="40" ImageUrl="Image/emptyAvatar.jpg" runat="server" />
+                                            <asp:Image ID="imgAvartar" CssClass="rounded-circle" Width="40" Height="40" ImageUrl="Image/emptyAvatar.jpg" runat="server" />
 
                                             <textarea id="taComment" runat="server" class="form-control ml-1 shadow-none textarea"></textarea>
                                         </div>
                                         <div class="mt-2 text-right">
-                                            <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-primary btn-sm shadow-none" Text="Post comment" OnClick="btnSubmit_Click" />
-                                            <asp:Button ID="btnCancel" runat="server" CssClass="btn btn-outline-primary btn-sm ml-1 shadow-none" Text="Cancel" OnClick="btnCancel_Click" />
+                                            <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-primary btn-sm shadow-none" Text="Bình luận" OnClick="btnSubmit_Click" />
+                                            <asp:Button ID="btnCancel" runat="server" CssClass="btn btn-outline-primary btn-sm ml-1 shadow-none" Text="Hủy" OnClick="btnCancel_Click" />
                                         </div>
                                     </div>
                                 </div>
