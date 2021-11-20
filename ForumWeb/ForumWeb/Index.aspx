@@ -123,14 +123,8 @@
                                                     <a class="title" id="txtNguoiDang" runat="server" href="#">Người đăng</a> - 
                                                     <a class="title" href="/BlogDetail.aspx?Id=<%#Eval("iId")%>"><%#Eval("sName")%></a> - 
                                                     <span class="title" style="font-size: small;"><%#((DateTime)Eval("dCreatedDate")).ToString("dd/MM/yyyy")%></span>
-<<<<<<< HEAD
                                                     <%#Eval("sContent").ToString().Trim().Substring(0,
                                                                 (Eval("sContent").ToString().Trim().Length > 150 ? 150 : Eval("sContent").ToString().Trim().Length - 1))%>...</p>
-=======
-                                                       <p><%#Eval("sContent").ToString().Trim().Substring(0,
-                                                                (Eval("sContent").ToString().Trim().Length > 150 ? 150 : Eval("sContent").ToString().Trim().Length))%>...</p>                                                 
-                                                    
->>>>>>> c3b000d4793407c3fb8255693c56492ddb1192f6
                                                     <div style="font-size: small;">
                                                         <span id="cmtCount" runat="server">0 bình luận</span> - 
                                                         <span><%#Eval("iViewCount")%> lượt xem</span>
