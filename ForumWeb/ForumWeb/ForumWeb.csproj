@@ -69,6 +69,7 @@
   <ItemGroup>
     <Content Include="App_Data\Image\67819780_861114670928894_4974516257068941312_o.jpg" />
     <Content Include="FileExplorer.aspx" />
+    <Content Include="Image\emptyAvatar.jpg" />
     <Content Include="UserAvt\default_avt.svg" />
     <Content Include="BlogDetail.aspx" />
     <Content Include="css\all.css" />
@@ -236,9 +237,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Image\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

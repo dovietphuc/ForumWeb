@@ -17,13 +17,18 @@ namespace ForumWeb
         SqlCommand cmd = new SqlCommand();
         SqlDataAdapter sda = new SqlDataAdapter();
         DataSet ds = new DataSet();
+        User user = new User();
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            user = (User)Session["user"];
+            if(user !=null){
+                imgAvartar.ImageUrl = user.Avatar;
+            }
             if (IsPostBack) return;
             LoadDataRptrBlog();
             LoadDataBlogFile();
             LoadDataRptrUser();
+            LoadDataRptrComment();
         }
         private void LoadDataRptrBlog()
         {
@@ -120,6 +125,55 @@ namespace ForumWeb
                 Response.Write(ex.Message);
             }
 
+        }
+        private void LoadDataRptrComment()
+        {
+            var blogId = Request.QueryString["Id"];
+            try
+            {
+                string sql = "exec select_comment_by_idBlog @blogId";
+                cmd = new SqlCommand(sql, con);
+                cmd.Parameters.AddWithValue("@blogId", Convert.ToInt32(blogId));
+
+                sda = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                sda.Fill(dt);
+                RptComment.DataSource = dt;
+                RptComment.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Response.Write(ex.Message);
+            }
+        }
+        protected void btnSubmit_Click(object sender, EventArgs e)
+        {
+            var blogId = Request.QueryString["Id"];
+            user = (User)Session["user"];
+            if (user != null)
+            {
+                SqlCommand cmd = new SqlCommand("create_comment", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                //string sql = "exec create_comment @blogId, @userId,@content";
+                //cmd = new SqlCommand(sql, con);
+                cmd.Parameters.AddWithValue("@blogId", Convert.ToInt32(blogId));
+                cmd.Parameters.AddWithValue("@userId", Convert.ToInt32(user.Id));
+                cmd.Parameters.AddWithValue("@content", taComment.Value);
+
+                con.Open();
+                int res = cmd.ExecuteNonQuery();
+
+                LoadDataRptrComment();
+            }
+            else
+            {
+                Response.Redirect("Login.aspx");
+            }
+        }
+
+        protected void btnCancel_Click(object sender, EventArgs e)
+        {
+            taComment.Value = "";
         }
     }
 }
