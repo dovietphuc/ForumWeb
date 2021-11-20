@@ -81,25 +81,26 @@
                     </div>
                     <div class="category-menu">
                         <asp:Repeater ID="RptCategory" runat="server" OnItemDataBound="RptCategory_ItemDataBound">
-                            <HeaderTemplate>
+                            <headertemplate>
                                 <li class="category-item-level-0">
                                     <a href="Index.aspx">Tất cả</a>
-                            </HeaderTemplate>
-                            <ItemTemplate>
+                                </li>
+                            </headertemplate>
+                            <itemtemplate>
                                 <li class="category-item-level-1">
                                     <a href="Index.aspx?categoryid=<%#Eval("iId")%>"><%#Eval("sName")%></a>
                                     <asp:Repeater ID="RptSubCategory" runat="server">
-                                        <ItemTemplate>
+                                        <itemtemplate>
                                             <li class="category-item-level-2">
                                                 <a href="Index.aspx?categoryid=<%#Eval("iId")%>"><%#Eval("sName")%></a>
                                             </li>
-                                        </ItemTemplate>
+                                        </itemtemplate>
                                     </asp:Repeater>
                                 </li>
-                            </ItemTemplate>
-                            <FooterTemplate>
+                            </itemtemplate>
+                            <footertemplate>
                                 </li>
-                            </FooterTemplate>
+                            </footertemplate>
                         </asp:Repeater>
                     </div>
                 </div>
@@ -109,10 +110,10 @@
                     <form id="form1" runat="server">
                         <asp:ScriptManager runat="server" ID="sm" />
                         <asp:UpdatePanel runat="server" ID="updatePanel">
-                            <ContentTemplate>
+                            <contenttemplate>
                                 <div class="content">
                                     <asp:Repeater ID="RptBlog" runat="server" OnItemDataBound="RptBlog_ItemDataBound">
-                                        <ItemTemplate>
+                                        <itemtemplate>
                                             <div class="blog-item">
                                                 <div style="float: left">
                                                     <asp:Image ID="imgAvatar" runat="server" ImageUrl="UserAvt/default_avt.svg" CssClass="avatar" />
@@ -122,9 +123,11 @@
                                                     </div>
                                                     <a class="title" id="txtNguoiDang" runat="server" href="#">Người đăng</a> - 
                                                     <a class="title" href="/BlogDetail.aspx?Id=<%#Eval("iId")%>"><%#Eval("sName")%></a> - 
-                                                    <span class="title" style="font-size: small;"><%#((DateTime)Eval("dCreatedDate")).ToString("dd/MM/yyyy")%></span>
-                                                    <%#Eval("sContent").ToString().Trim().Substring(0,
-                                                                (Eval("sContent").ToString().Trim().Length > 150 ? 150 : Eval("sContent").ToString().Trim().Length - 1))%>...</p>
+                                                    <span class="title" style="font-size: small;"><%#((DateTime)Eval("dCreatedDate")).ToString("dd/MM/yyyy HH:mm")%></span>
+                                                    <p>
+                                                        <%#Eval("sContent").ToString().Trim().Substring(0,
+                                                                (Eval("sContent").ToString().Trim().Length > 150 ? 150 : Eval("sContent").ToString().Trim().Length))%>...
+                                                    </p>
                                                     <div style="font-size: small;">
                                                         <span id="cmtCount" runat="server">0 bình luận</span> - 
                                                         <span><%#Eval("iViewCount")%> lượt xem</span>
@@ -132,11 +135,11 @@
                                                 </div>
                                                 <hr />
                                             </div>
-                                        </ItemTemplate>
+                                        </itemtemplate>
                                     </asp:Repeater>
                                     <asp:Button ID="btnLoadMore" CssClass="btn" runat="server" Text="Tải thêm" OnClick="btnLoadMore_Click" />
                                 </div>
-                            </ContentTemplate>
+                            </contenttemplate>
                         </asp:UpdatePanel>
                     </form>
                 </div>

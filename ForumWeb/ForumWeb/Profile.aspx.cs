@@ -35,7 +35,7 @@ namespace ForumWeb
                 txtFullname.Text = user.Fullname;
                 txtEmail.Text = user.Email;
                 txtPhone.Text = user.Phone;
-                txtTimeCreate.Value = user.CreateTime.ToString("dd/MM/yyyy");
+                txtTimeCreate.Value = user.CreateTime.ToString("dd/MM/yyyy HH:mm");
                 if (!String.IsNullOrEmpty(user.Avatar))
                 {
                     imageAvt.Src = user.Avatar;
