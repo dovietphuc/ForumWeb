@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
-        uploadform {
+        #uploadform {
             background-color: #f1f1f1;
             margin: 10px 5%;
             border-radius: 12px;
