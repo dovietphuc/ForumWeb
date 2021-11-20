@@ -20,12 +20,12 @@ namespace ForumWeb
         User user = new User();
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (IsPostBack) return;
             user = (User)Session["user"];
             if(user !=null){
                 imgAvartar.ImageUrl = user.Avatar;
-                iViewCount();
             }
-            if (IsPostBack) return;
+            iViewCount();
             LoadDataRptrBlog();
             LoadDataBlogFile();
             LoadDataRptrUser();
