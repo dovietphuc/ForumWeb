@@ -23,12 +23,23 @@ namespace ForumWeb
             user = (User)Session["user"];
             if(user !=null){
                 imgAvartar.ImageUrl = user.Avatar;
+                iViewCount();
             }
             if (IsPostBack) return;
             LoadDataRptrBlog();
             LoadDataBlogFile();
             LoadDataRptrUser();
             LoadDataRptrComment();
+        }
+        private void iViewCount()
+        {
+            var blogId = Request.QueryString["Id"];
+            SqlCommand cmd = new SqlCommand("update_view_blog", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@blogId", Convert.ToInt32(blogId));
+            con.Open();
+            cmd.ExecuteNonQuery();
+            con.Close();
         }
         private void LoadDataRptrBlog()
         {
