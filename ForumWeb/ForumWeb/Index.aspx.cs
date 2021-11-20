@@ -51,7 +51,7 @@ namespace ForumWeb
             }
             catch (Exception ex)
             {
-                Response.Write(ex.Message);
+                //Response.Write(ex.Message);
             }
         }
 
@@ -101,7 +101,7 @@ namespace ForumWeb
             }
             catch (Exception ex)
             {
-                Response.Write(ex.Message);
+                //Response.Write(ex.Message);
             }
             return 0;
         }
@@ -133,7 +133,7 @@ namespace ForumWeb
             }
             catch (Exception ex)
             {
-                Response.Write(ex.Message);
+                //Response.Write(ex.Message);
                 return null;
             }
         }
@@ -159,7 +159,7 @@ namespace ForumWeb
                 }
                 catch (Exception ex)
                 {
-                    Response.Write(ex.Message);
+                    //Response.Write(ex.Message);
                 }
             }
         }
