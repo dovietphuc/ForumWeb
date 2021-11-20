@@ -20,14 +20,24 @@ namespace ForumWeb.XuLy
 
             if (username != null && pwd != null && repwd != null && pwd.Equals(repwd))
             {
-                registerUser(username, pwd);
+                bool isSuccess = registerUser(username, pwd);
+                if (isSuccess)
+                {
+                    Response.Redirect("../Login.aspx?registSuccess=1");
+                    return;
+                } else
+                {
+                    Response.Redirect("../SignUp.aspx?err=1");
+                    return;
+                }
             }
 
             Response.Redirect("../Login.aspx");
         }
 
-        private bool registerUser(string ussername, string pwd)
+        private bool registerUser(string username, string pwd)
         {
+            if (isExistUsername(username)) return false;
 
             string query = "INSERT INTO [dbo].[User]"
             + " ([sUserName]"
@@ -38,11 +48,22 @@ namespace ForumWeb.XuLy
             SqlConnection connection = DBConnection.getConnection();
             SqlCommand sqlCommand = connection.CreateCommand();
             sqlCommand.CommandText = query;
-            sqlCommand.Parameters.AddWithValue("@sUserName", ussername);
+            sqlCommand.Parameters.AddWithValue("@sUserName", username);
             sqlCommand.Parameters.AddWithValue("@sHashedPassword", pwd.GetHashCode());
             connection.Open();
             int i = sqlCommand.ExecuteNonQuery();
             connection.Close();
+            return i > 0;
+        }
+
+        public bool isExistUsername(string username)
+        {
+            string query = "SELECT sUserName FROM [dbo].[User] WHERE sUserName like @username";
+            SqlConnection connection = DBConnection.getConnection();
+            SqlCommand sqlCommand = connection.CreateCommand();
+            sqlCommand.CommandText = query;
+            sqlCommand.Parameters.AddWithValue("@username", username);
+            int i = new SqlDataAdapter(sqlCommand).Fill(new DataSet());
             return i > 0;
         }
     }
