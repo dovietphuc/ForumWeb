@@ -57,53 +57,45 @@ namespace ForumWeb
 
         private int LoadDataRptrBlog(int categoryid = -1, string txtSearch = null)
         {
-            try
+            SqlCommand cmd = new SqlCommand();
+            int top = itemPerPage * page;
+            cmd = con.CreateCommand();
+
+            if (txtSearch != null)
             {
-                SqlCommand cmd = new SqlCommand();
-                int top = itemPerPage * page;
-                cmd = con.CreateCommand();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "search_text_blog";
+                cmd.Parameters.AddWithValue("@text", txtSearch);
+                cmd.Parameters.AddWithValue("@top", top);
+            }
+            else
+            {
+                string sql = "select TOP(" + top + ") * from Blog";
 
-                if (txtSearch != null)
+                if (categoryid != -1)
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.CommandText = "search_text_blog";
-                    cmd.Parameters.AddWithValue("@text", txtSearch);
-                    cmd.Parameters.AddWithValue("@top", top);
-                }
-                else
-                {
-                    string sql = "select TOP(" + top + ") * from Blog";
-
-                    if (categoryid != -1)
+                    List<int> childs = getSubTypesForParent(categoryid);
+                    sql += " WHERE iBlogTypeId = @categoryid";
+                    if (childs != null)
                     {
-                        List<int> childs = getSubTypesForParent(categoryid);
-                        sql += " WHERE iBlogTypeId = @categoryid";
-                        if (childs != null)
+                        foreach (int child in childs)
                         {
-                            foreach (int child in childs)
-                            {
-                                sql += " OR iBlogTypeId = " + child;
-                            }
+                            sql += " OR iBlogTypeId = " + child;
                         }
-                        cmd.Parameters.AddWithValue("@categoryid", categoryid);
                     }
-
-                    sql += " ORDER BY dCreatedDate DESC";
-                    cmd.CommandText = sql;
+                    cmd.Parameters.AddWithValue("@categoryid", categoryid);
                 }
 
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                int i = sda.Fill(dt);
-                RptBlog.DataSource = dt;
-                RptBlog.DataBind();
-                return i;
+                sql += " ORDER BY dCreatedDate DESC";
+                cmd.CommandText = sql;
             }
-            catch (Exception ex)
-            {
-                Response.Write(ex.Message);
-            }
-            return 0;
+
+            SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            int i = sda.Fill(dt);
+            RptBlog.DataSource = dt;
+            RptBlog.DataBind();
+            return i;
         }
 
         private List<int> getSubTypesForParent(int parentId)
@@ -212,13 +204,16 @@ namespace ForumWeb
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 HtmlGenericControl subLink = (HtmlGenericControl)e.Item.FindControl("blogTypeLink");
-                int blogtypeid = (int)((DataRowView)e.Item.DataItem)["iBlogTypeId"];
+                string blogTypeId = ((DataRowView)e.Item.DataItem)["iBlogTypeId"].ToString();
+                int blogtypeid = (int)(string.IsNullOrEmpty(blogTypeId) ? -1 : Int32.Parse(blogTypeId));
 
                 initSubLink(subLink, getBlogType(blogtypeid));
 
                 initCmtCount((HtmlGenericControl)e.Item.FindControl("cmtCount"), (int)((DataRowView)e.Item.DataItem)["iId"]);
 
-                initNguoiDang((int)((DataRowView)e.Item.DataItem)["iUserId"], e);
+                string userId = ((DataRowView)e.Item.DataItem)["iUserId"].ToString();
+
+                initNguoiDang((int)(string.IsNullOrEmpty(userId) ? -1 : Int32.Parse(userId)), e);
             }
         }
 
