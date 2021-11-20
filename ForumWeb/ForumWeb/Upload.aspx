@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
-        form {
+        uploadform {
             background-color: #f1f1f1;
             margin: 10px 5%;
             border-radius: 12px;
@@ -77,10 +77,10 @@
             ConnectionString="<%$ ConnectionStrings:dbconnect %>"
             SelectCommand="SELECT * FROM [BlogType]" />
         <hr />
-        <input type="text" id="txtTitle" runat="server" name="txtTitle" required="required" placeholder="Tiêu đề cuộc thảo luận" />
+        <input type="text" id="txtTitle" runat="server" name="txtTitle" required="required" placeholder="Tiêu đề cuộc thảo luận" maxlength="255" />
 
         <hr />
-        <textarea name="txtContent" id="txtContent" runat="server" required="required" placeholder="Nội dung"></textarea>
+        <textarea name="txtContent" id="txtContent" runat="server" required="required" placeholder="Nội dung" maxlength="4000"></textarea>
         <hr />
         <label>Thêm ảnh</label><br />
         <asp:FileUpload ID="iUpload" runat="server" accept=".png,.jpg,.jpeg" AllowMultiple="true" />

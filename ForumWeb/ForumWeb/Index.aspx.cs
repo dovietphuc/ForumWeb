@@ -17,10 +17,12 @@ namespace ForumWeb
         int page;
         int categoryid;
         int itemPerPage = 10;
+        string search = null;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             categoryid = Int32.Parse(Request.QueryString["categoryid"] != null ? Request.QueryString["categoryid"] : "-1");
+            search = Request.QueryString["search"];
 
             if (IsPostBack) return;
 
@@ -30,10 +32,13 @@ namespace ForumWeb
             headerLink.InnerHtml = " / <a href='Index.aspx'>Trang chủ</a>" + headerLink.InnerHtml;
 
             page = 1;
-            LoadDataRptrBlog(categoryid);
+
+
+            LoadDataRptrBlog(categoryid, search);
 
             btnLoadMore.CommandArgument = page.ToString();
         }
+
         private void LoadDataRptrCategories()
         {
             try
@@ -49,30 +54,44 @@ namespace ForumWeb
                 Response.Write(ex.Message);
             }
         }
-        private int LoadDataRptrBlog(int categoryid = -1)
+
+        private int LoadDataRptrBlog(int categoryid = -1, string txtSearch = null)
         {
             try
             {
                 SqlCommand cmd = new SqlCommand();
                 int top = itemPerPage * page;
-                string sql = "select TOP(" + top + ") * from Blog";
                 cmd = con.CreateCommand();
-                if (categoryid != -1)
+
+                if (txtSearch != null)
                 {
-                    List<int> childs = getSubTypesForParent(categoryid);
-                    sql += " WHERE iBlogTypeId = @categoryid";
-                    if (childs != null)
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = "search_text_blog";
+                    cmd.Parameters.AddWithValue("@text", txtSearch);
+                    cmd.Parameters.AddWithValue("@top", top);
+                }
+                else
+                {
+                    string sql = "select TOP(" + top + ") * from Blog";
+
+                    if (categoryid != -1)
                     {
-                        foreach (int child in childs)
+                        List<int> childs = getSubTypesForParent(categoryid);
+                        sql += " WHERE iBlogTypeId = @categoryid";
+                        if (childs != null)
                         {
-                            sql += " OR iBlogTypeId = " + child;
+                            foreach (int child in childs)
+                            {
+                                sql += " OR iBlogTypeId = " + child;
+                            }
                         }
+                        cmd.Parameters.AddWithValue("@categoryid", categoryid);
                     }
-                    cmd.Parameters.AddWithValue("@categoryid", categoryid);
+
+                    sql += " ORDER BY dCreatedDate DESC";
+                    cmd.CommandText = sql;
                 }
 
-                sql += " ORDER BY dCreatedDate";
-                cmd.CommandText = sql;
                 SqlDataAdapter sda = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 int i = sda.Fill(dt);
@@ -240,7 +259,7 @@ namespace ForumWeb
         {
             page = Int32.Parse(((Button)sender).CommandArgument) + 1;
             ((Button)sender).CommandArgument = page.ToString();
-            int i = LoadDataRptrBlog(categoryid);
+            int i = LoadDataRptrBlog(categoryid, search);
             if (i % itemPerPage != 0 || i < itemPerPage * page)
             {
                 ((Button)sender).Visible = false;

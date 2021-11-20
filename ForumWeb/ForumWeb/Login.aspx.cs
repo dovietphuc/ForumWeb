@@ -12,6 +12,10 @@ namespace ForumWeb
         protected void Page_Load(object sender, EventArgs e)
         {
             Application["user"] = null;
+            bool isErr = Request.QueryString["err"] != null ? Request.QueryString["err"].Equals("1") : false;
+            err.Visible = isErr;
+            bool registSuccess = Request.QueryString["registSuccess"] != null ? Request.QueryString["registSuccess"].Equals("1") : false;
+            success.Visible = registSuccess;
         }
     }
 }

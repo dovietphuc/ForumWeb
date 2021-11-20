@@ -25,10 +25,12 @@ namespace ForumWeb.XuLy
                     Application["user"] = user;
                     Session["user"] = user;
                     Response.Redirect("../Index.aspx");
+                    return;
                 }
                 else
                 {
-                    Response.Redirect("../Login.aspx");
+                    Response.Redirect("../Login.aspx?err=1");
+                    return;
                 }
             }
 

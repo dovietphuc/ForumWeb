@@ -11,7 +11,8 @@ namespace ForumWeb
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            bool isErr = Request.QueryString["err"] != null ? Request.QueryString["err"].Equals("1") : false;
+            err.Visible = isErr;
         }
     }
 }

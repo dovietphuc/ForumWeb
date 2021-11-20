@@ -6,10 +6,10 @@
 <head runat="server">
     <meta charset="utf-8">
     <meta lang="vi" />
-    <meta name ="viewport" content="width=device-width,initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 
     <title></title>
-    
+
     <link href="css/all.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/menu.css" />
     <link href="css/bootstrap.min.css" rel="stylesheet" />
@@ -33,6 +33,11 @@
 <body>
     <nav class="black">
         <ul>
+            <li>
+                <form id="searchForm" method="get" action="Index.aspx">
+                    <input type="search" class="search-box" placeholder="Tìm kiếm" name="search" />
+                </form>
+            </li>
             <li><a href="Index.aspx">Trang chủ</a></li>
             <li><a href="#">Giới thiệu</a></li>
             <li><a href="#">Liên hệ</a></li>
