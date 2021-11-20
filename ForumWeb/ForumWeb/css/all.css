@@ -16,3 +16,10 @@ a, a:hover{
 .box-cmt{
     border-top:1px solid gray;
 }
+#main-index{
+    min-height:800px;
+}
+    #main-index .content {
+        min-height: 400px;
+        background-color: #f8f9fa;
+    }
