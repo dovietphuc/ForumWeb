@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
-        form_updateprofile {
+        #form_updateprofile {
             background-color: #f1f1f1;
             margin: 10px 5%;
             border-radius: 12px;
