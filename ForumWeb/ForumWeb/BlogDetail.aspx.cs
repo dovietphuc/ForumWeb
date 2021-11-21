@@ -391,13 +391,14 @@ namespace ForumWeb
             return -1;
         }
 
-        public bool isAprovide(int blogid) 
+        public bool isAprovide(int blogid)
         {
             string query = "SELECT * FROM [dbo].[Blog] JOIN [Status] ON [Blog].iStatusId = [Status].iId" +
-                " WHERE [Status].sName = N'Đã duyệt'";
+                " WHERE [Status].sName like N'Đã duyệt' AND [Blog].iID = @blogId";
             SqlConnection connection = DBConnection.getConnection();
             SqlCommand sqlCommand = connection.CreateCommand();
             sqlCommand.CommandText = query;
+            sqlCommand.Parameters.AddWithValue("@blogId", blogid);
             DataTable tb = new DataTable();
             int i = new SqlDataAdapter(sqlCommand).Fill(tb);
             return i > 0;
