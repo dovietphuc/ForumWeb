@@ -8,6 +8,8 @@ namespace ForumWeb.Model
     public class User
     {
         public int Id { get; set; }
+        public int Status { get; set; }
+        public int role { get; set; }
         public string Username { get; set; }
         public string Fullname { get; set; }
         public string Email { get; set; }

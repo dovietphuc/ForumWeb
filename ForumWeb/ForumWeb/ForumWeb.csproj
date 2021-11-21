@@ -71,6 +71,7 @@
     <Content Include="css\font-awesome.css" />
     <Content Include="FileExplorer.aspx" />
     <Content Include="Image\emptyAvatar.jpg" />
+    <Content Include="User1.aspx" />
     <Content Include="UserAvt\default_avt.svg" />
     <Content Include="BlogDetail.aspx" />
     <Content Include="css\all.css" />
@@ -212,6 +213,13 @@
     </Compile>
     <Compile Include="Upload.aspx.designer.cs">
       <DependentUpon>Upload.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="User1.aspx.cs">
+      <DependentUpon>User1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="User1.aspx.designer.cs">
+      <DependentUpon>User1.aspx</DependentUpon>
     </Compile>
     <Compile Include="XuLy\XuLyLogin.aspx.cs">
       <DependentUpon>XuLyLogin.aspx</DependentUpon>

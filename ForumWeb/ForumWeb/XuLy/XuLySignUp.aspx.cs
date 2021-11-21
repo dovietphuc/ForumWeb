@@ -42,10 +42,11 @@ namespace ForumWeb.XuLy
             string query = "INSERT INTO [dbo].[User]"
             + " ([sUserName]"
             + " ,[sHashedPassword]"
-            + " ,[iPermissionId])"
+            + " ,[iPermissionId]"
+            + " ,[iStatus])"
             + " VALUES"
             + " (@sUserName"
-            + " , @sHashedPassword, " + getNormalPermissionId() + ")";
+            + " , @sHashedPassword, " + getNormalPermissionId() + ", " + 1 + ")";
             SqlConnection connection = DBConnection.getConnection();
             SqlCommand sqlCommand = connection.CreateCommand();
             sqlCommand.CommandText = query;
