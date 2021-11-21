@@ -24,7 +24,7 @@ namespace ForumWeb
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack) return;
-            user = (User)Session["user"];
+            user = (User)Application["user"];
             if(user == null)
             {
                 messageID.InnerHtml = "<h3>Bạn không có quyền truy cập vào trang này</h3>";
