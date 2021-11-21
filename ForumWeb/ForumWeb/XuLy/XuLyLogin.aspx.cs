@@ -25,7 +25,6 @@ namespace ForumWeb.XuLy
                     if(user.Status == 1)
                     {
                         Application["user"] = user;
-                        Session["user"] = user;
                         Response.Redirect("../Index.aspx");
                         return;
                     }
