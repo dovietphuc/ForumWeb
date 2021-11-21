@@ -21,15 +21,39 @@ namespace ForumWeb
         User user = new User();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(Request.QueryString["Id"] == null)
+            if (string.IsNullOrEmpty(Request.QueryString["Id"]))
+            {
+                Response.Redirect("Index.aspx");
+                return;
+            }
+            user = (User)Application["user"];
+            bool isAd = isAdmin(user);
+            forAdmin.Visible = isAd;
+            bool isAp = isAprovide(Int32.Parse(Request.QueryString["Id"]));
+            if (!isAp && !isAd)
             {
                 Response.Redirect("Index.aspx");
                 return;
             }
 
             if (IsPostBack) return;
-            user = (User)Session["user"];
-            if(user !=null){
+
+            if (isAd)
+            {
+                if (isAp)
+                {
+                    aprovide.Visible = false;
+                    notaprovide.Visible = true;
+                }
+                else
+                {
+                    aprovide.Visible = true;
+                    notaprovide.Visible = false;
+                }
+            }
+
+            if (user != null)
+            {
                 imgAvartar.ImageUrl = user.Avatar;
             }
             iViewCount();
@@ -88,9 +112,9 @@ namespace ForumWeb
                 var data = ds.Tables[0].Rows;
                 for (int i = 0; i < data.Count; i++)
                 {
-                    contentFile.InnerHtml += @"<div><a href='/FileExplorer.aspx?txtFile=" 
-                        + ds.Tables[0].Rows[i]["surl"].ToString().Remove(0,5) 
-                        + "'>" + ds.Tables[0].Rows[i]["surl"].ToString().Remove(0, 5) 
+                    contentFile.InnerHtml += @"<div><a href='/FileExplorer.aspx?txtFile="
+                        + ds.Tables[0].Rows[i]["surl"].ToString().Remove(0, 5)
+                        + "'>" + ds.Tables[0].Rows[i]["surl"].ToString().Remove(0, 5)
                         + @"</a></div>";
                 }
             }
@@ -167,7 +191,7 @@ namespace ForumWeb
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
             var blogId = Request.QueryString["Id"];
-            user = (User)Session["user"];
+            user = (User)Application["user"];
             if (user != null)
             {
                 SqlCommand cmd = new SqlCommand("create_comment", con);
@@ -189,7 +213,7 @@ namespace ForumWeb
                 {
 
                 }
-             
+
 
             }
             else
@@ -231,7 +255,7 @@ namespace ForumWeb
                 catch (Exception)
                 {
 
-                    
+
                 }
             }
         }
@@ -246,13 +270,13 @@ namespace ForumWeb
                 HtmlTextArea currentTextArea = (HtmlTextArea)RptComment.Items[i].FindControl("taChildComment");
                 if (currentTextArea.Value.Length > 0)
                 {
-                   textareaValue = currentTextArea.Value; //Get the textareavalue
+                    textareaValue = currentTextArea.Value; //Get the textareavalue
                 }
             }
             //HtmlTextArea currentTextArea = (HtmlTextArea)RptComment.Items[0].FindControl("taChildComment");
 
             //var blogId = Request.QueryString["Id"];
-            user = (User)Session["user"];
+            user = (User)Application["user"];
             if (user != null)
             {
                 SqlCommand cmd = new SqlCommand("create_child_comment", con);
@@ -272,6 +296,111 @@ namespace ForumWeb
             {
                 Response.Redirect("Login.aspx");
             }
+        }
+
+        private bool isAdmin(User user)
+        {
+            if (user == null) return false;
+
+            string query = "SELECT * FROM [dbo].[User] JOIN [Permission] ON [User].iPermissionId = [Permission].iId" +
+                " WHERE [Permission].sName like N'Admin' AND [User].iId = @userid";
+            SqlCommand cmd = con.CreateCommand();
+            cmd.CommandText = query;
+            cmd.Parameters.AddWithValue("@userid", user.Id);
+            SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            int i = sda.Fill(dt);
+            return i > 0;
+        }
+
+        protected void aprovide_Click(object sender, EventArgs e)
+        {
+            user = (User)Application["user"];
+
+            if (!isAdmin(user) || string.IsNullOrEmpty(Request.QueryString["Id"]))
+            {
+                return;
+            }
+
+            int blogId = Int32.Parse(Request.QueryString["Id"]);
+            string query = "UPDATE [dbo].[Blog] SET [iStatusId] = " + getAprovideStatusId() + " WHERE iId = @id";
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@id", blogId);
+            con.Open();
+            int i = cmd.ExecuteNonQuery();
+            con.Close();
+
+            if(i > 0)
+            {
+                aprovide.Visible = false;
+                notaprovide.Visible = true;
+            }
+        }
+
+        protected void notaprovide_Click(object sender, EventArgs e)
+        {
+            user = (User)Application["user"];
+
+            if (!isAdmin(user) || string.IsNullOrEmpty(Request.QueryString["Id"]))
+            {
+                return;
+            }
+
+            int blogId = Int32.Parse(Request.QueryString["Id"]);
+            string query = "UPDATE [dbo].[Blog] SET [iStatusId] = " + getNotAprovideStatusId() + " WHERE iId = @id";
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@id", blogId);
+            con.Open();
+            int i = cmd.ExecuteNonQuery();
+            con.Close();
+
+            if (i > 0)
+            {
+                aprovide.Visible = true;
+                notaprovide.Visible = false;
+            }
+        }
+
+        public int getNotAprovideStatusId()
+        {
+            string query = "SELECT [iId],[sName],[sDescription] FROM [dbo].[Status] WHERE sName like N'Chưa duyệt'";
+            SqlConnection connection = DBConnection.getConnection();
+            SqlCommand sqlCommand = connection.CreateCommand();
+            sqlCommand.CommandText = query;
+            DataTable tb = new DataTable();
+            int i = new SqlDataAdapter(sqlCommand).Fill(tb);
+            if (i > 0)
+            {
+                return Int32.Parse(tb.Rows[0]["iId"].ToString());
+            }
+            return -1;
+        }
+
+        public int getAprovideStatusId()
+        {
+            string query = "SELECT [iId],[sName],[sDescription] FROM [dbo].[Status] WHERE sName like N'Đã duyệt'";
+            SqlConnection connection = DBConnection.getConnection();
+            SqlCommand sqlCommand = connection.CreateCommand();
+            sqlCommand.CommandText = query;
+            DataTable tb = new DataTable();
+            int i = new SqlDataAdapter(sqlCommand).Fill(tb);
+            if (i > 0)
+            {
+                return Int32.Parse(tb.Rows[0]["iId"].ToString());
+            }
+            return -1;
+        }
+
+        public bool isAprovide(int blogid) 
+        {
+            string query = "SELECT * FROM [dbo].[Blog] JOIN [Status] ON [Blog].iStatusId = [Status].iId" +
+                " WHERE [Status].sName = N'Đã duyệt'";
+            SqlConnection connection = DBConnection.getConnection();
+            SqlCommand sqlCommand = connection.CreateCommand();
+            sqlCommand.CommandText = query;
+            DataTable tb = new DataTable();
+            int i = new SqlDataAdapter(sqlCommand).Fill(tb);
+            return i > 0;
         }
     }
 }

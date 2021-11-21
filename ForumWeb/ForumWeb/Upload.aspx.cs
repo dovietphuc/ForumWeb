@@ -37,14 +37,16 @@ namespace ForumWeb
                                + (ListBoxCategories.SelectedItem != null ? " ,[iBlogTypeId]" : "")
                                + " ,[iUserId]"
                                + " ,[iViewCount]"
-                               + " ,[bIsPinned])"
+                               + " ,[bIsPinned]"
+                               + " ,[iStatusId])"
                          + " VALUES"
                                + " (@sName"
                                + " , @sContent"
                                + (ListBoxCategories.SelectedItem != null ? " , @iBlogTypeId" : "")
                                + " , @iUserId"
                                + " , @iViewCount"
-                               + " , @bIsPinned)";
+                               + " , @bIsPinned"
+                               + ", @statusId)";
             SqlConnection connection = DBConnection.getConnection();
             SqlCommand command = connection.CreateCommand();
             command.CommandText = query;
@@ -57,6 +59,7 @@ namespace ForumWeb
             command.Parameters.AddWithValue("@iUserId", user.Id);
             command.Parameters.AddWithValue("@iViewCount", 0);
             command.Parameters.AddWithValue("@bIsPinned", false);
+            command.Parameters.AddWithValue("@statusId", getDefaultStatusId());
             connection.Open();
             int i = command.ExecuteNonQuery();
             command.CommandText = "Select @@Identity";
@@ -113,6 +116,21 @@ namespace ForumWeb
                 btnSubmit.Enabled = true;
             }
             connection.Close();
+        }
+
+        public int getDefaultStatusId()
+        {
+            string query = "SELECT [iId],[sName],[sDescription] FROM [dbo].[Status] WHERE sName like N'Chưa duyệt'";
+            SqlConnection connection = DBConnection.getConnection();
+            SqlCommand sqlCommand = connection.CreateCommand();
+            sqlCommand.CommandText = query;
+            DataTable tb = new DataTable();
+            int i = new SqlDataAdapter(sqlCommand).Fill(tb);
+            if (i > 0)
+            {
+                return Int32.Parse(tb.Rows[0]["iId"].ToString());
+            }
+            return -1;
         }
     }
 }

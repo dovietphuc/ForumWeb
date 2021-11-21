@@ -23,6 +23,8 @@ namespace ForumWeb
         {
             categoryid = Int32.Parse(Request.QueryString["categoryid"] != null ? Request.QueryString["categoryid"] : "-1");
             search = Request.QueryString["search"];
+            User user = (User)Application["user"];
+            forAdmin.Visible = isAdmin(user);
 
             if (IsPostBack) return;
 
@@ -60,22 +62,24 @@ namespace ForumWeb
             SqlCommand cmd = new SqlCommand();
             int top = itemPerPage * page;
             cmd = con.CreateCommand();
+            User user = (User)Application["user"];
 
             if (txtSearch != null)
             {
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "search_text_blog";
+                cmd.CommandText = isAdmin(user) ? "search_text_blog_for_admin" : "search_text_blog";
                 cmd.Parameters.AddWithValue("@text", txtSearch);
                 cmd.Parameters.AddWithValue("@top", top);
             }
             else
             {
-                string sql = "select TOP(" + top + ") * from Blog";
+                string forAdmin = " JOIN[Status] ON[Status].iId = [Blog].iStatusId WHERE[Status].sName like N'Đã duyệt'";
+                string sql = "select TOP(" + top + ") * from Blog" + (!isAdmin(user) ? forAdmin : " WHERE 1=1");
 
                 if (categoryid != -1)
                 {
                     List<int> childs = getSubTypesForParent(categoryid);
-                    sql += " WHERE iBlogTypeId = @categoryid";
+                    sql += " AND (iBlogTypeId = @categoryid";
                     if (childs != null)
                     {
                         foreach (int child in childs)
@@ -83,6 +87,7 @@ namespace ForumWeb
                             sql += " OR iBlogTypeId = " + child;
                         }
                     }
+                    sql += ")";
                     cmd.Parameters.AddWithValue("@categoryid", categoryid);
                 }
 
@@ -206,14 +211,33 @@ namespace ForumWeb
                 HtmlGenericControl subLink = (HtmlGenericControl)e.Item.FindControl("blogTypeLink");
                 string blogTypeId = ((DataRowView)e.Item.DataItem)["iBlogTypeId"].ToString();
                 int blogtypeid = (int)(string.IsNullOrEmpty(blogTypeId) ? -1 : Int32.Parse(blogTypeId));
-
                 initSubLink(subLink, getBlogType(blogtypeid));
 
-                initCmtCount((HtmlGenericControl)e.Item.FindControl("cmtCount"), (int)((DataRowView)e.Item.DataItem)["iId"]);
+                int blogId = (int)((DataRowView)e.Item.DataItem)["iId"];
+                initCmtCount((HtmlGenericControl)e.Item.FindControl("cmtCount"), blogId);
 
                 string userId = ((DataRowView)e.Item.DataItem)["iUserId"].ToString();
-
                 initNguoiDang((int)(string.IsNullOrEmpty(userId) ? -1 : Int32.Parse(userId)), e);
+
+                User user = (User)Application["user"];
+                HtmlGenericControl txtIsAprovide = (HtmlGenericControl)e.Item.FindControl("txtIsAprovide");
+                if (isAdmin(user))
+                {
+                    txtIsAprovide.Visible = true;
+                    if (isAprovide(blogId))
+                    {
+                        
+                        txtIsAprovide.InnerText = "Đã duyệt";
+                    }
+                    else
+                    {
+                        txtIsAprovide.InnerText = "Chưa duyệt";
+                    }
+                }
+                else
+                {
+                    txtIsAprovide.Visible = false;
+                }
             }
         }
 
@@ -246,7 +270,9 @@ namespace ForumWeb
                 HtmlAnchor txtNguoiDang = (HtmlAnchor)e.Item.FindControl("txtNguoiDang");
                 txtNguoiDang.InnerText = dt.Rows[0]["sUserName"].ToString();
                 Image imgAvatar = (Image)e.Item.FindControl("imgAvatar");
-                imgAvatar.ImageUrl = dt.Rows[0]["sAvatarUrl"].ToString();
+                imgAvatar.ImageUrl = string.IsNullOrEmpty(dt.Rows[0]["sAvatarUrl"].ToString()) ?
+                                                                        "UserAvt/default_avt.svg"
+                                                                        : dt.Rows[0]["sAvatarUrl"].ToString();
             }
         }
 
@@ -259,6 +285,95 @@ namespace ForumWeb
             {
                 ((Button)sender).Visible = false;
             }
+        }
+
+        private bool isAdmin(User user)
+        {
+            if (user == null) return false;
+
+            string query = "SELECT * FROM [dbo].[User] JOIN [Permission] ON [User].iPermissionId = [Permission].iId" +
+                " WHERE [Permission].sName like N'Admin' AND [User].iId = @userid";
+            SqlCommand cmd = con.CreateCommand();
+            cmd.CommandText = query;
+            cmd.Parameters.AddWithValue("@userid", user.Id);
+            SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            int i = sda.Fill(dt);
+            return i > 0;
+        }
+
+        private int LoadDataRptrBlog_Aprovide()
+        {
+            SqlCommand cmd = new SqlCommand();
+            int top = itemPerPage * page;
+            cmd = con.CreateCommand();
+            User user = (User)Application["user"];
+            if (!isAdmin(user)) return -1;
+
+            string forAdmin = " JOIN[Status] ON[Status].iId = [Blog].iStatusId WHERE[Status].sName like N'Đã duyệt'";
+            string sql = "select TOP(" + top + ") * from Blog" + forAdmin;
+            sql += " ORDER BY dCreatedDate DESC";
+            cmd.CommandText = sql;
+            SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            int i = sda.Fill(dt);
+            RptBlog.DataSource = dt;
+            RptBlog.DataBind();
+            return i;
+        }
+
+        private int LoadDataRptrBlog_NotAprovide()
+        {
+            SqlCommand cmd = new SqlCommand();
+            int top = itemPerPage * page;
+            cmd = con.CreateCommand();
+            User user = (User)Application["user"];
+            if (!isAdmin(user)) return -1;
+
+            string forAdmin = " JOIN[Status] ON[Status].iId = [Blog].iStatusId WHERE[Status].sName like N'Chưa duyệt'";
+            string sql = "select TOP(" + top + ") * from Blog" + forAdmin;
+            sql += " ORDER BY dCreatedDate DESC";
+            cmd.CommandText = sql;
+            SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            int i = sda.Fill(dt);
+            RptBlog.DataSource = dt;
+            RptBlog.DataBind();
+            return i;
+        }
+
+        protected void aprovide_Click(object sender, EventArgs e)
+        {
+            page = 1;
+            btnLoadMore.CommandArgument = page.ToString();
+            int i = LoadDataRptrBlog_Aprovide();
+            if (i % itemPerPage != 0 || i < itemPerPage * page)
+            {
+                btnLoadMore.Visible = false;
+            }
+        }
+
+        protected void notaprovide_Click(object sender, EventArgs e)
+        {
+            page = 1;
+            btnLoadMore.CommandArgument = page.ToString();
+            int i = LoadDataRptrBlog_NotAprovide();
+            if (i % itemPerPage != 0 || i < itemPerPage * page)
+            {
+                btnLoadMore.Visible = false;
+            }
+        }
+
+        public bool isAprovide(int blogid)
+        {
+            string query = "SELECT * FROM [dbo].[Blog] JOIN [Status] ON [Blog].iStatusId = [Status].iId" +
+                " WHERE [Status].sName = N'Đã duyệt'";
+            SqlConnection connection = DBConnection.getConnection();
+            SqlCommand sqlCommand = connection.CreateCommand();
+            sqlCommand.CommandText = query;
+            DataTable tb = new DataTable();
+            int i = new SqlDataAdapter(sqlCommand).Fill(tb);
+            return i > 0;
         }
     }
 }

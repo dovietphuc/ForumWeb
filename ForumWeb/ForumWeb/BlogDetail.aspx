@@ -7,35 +7,35 @@
     <script src="js/popper.min.js"></script>
     <style>
         .date {
-            font-size: 11px
+            font-size: 11px;
         }
 
         .comment-text {
-            font-size: 12px
+            font-size: 12px;
         }
 
         .fs-12 {
-            font-size: 12px
+            font-size: 12px;
         }
 
         .shadow-none {
-            box-shadow: none
+            box-shadow: none;
         }
 
         .name {
-            color: #007bff
+            color: #007bff;
         }
 
         .cursor:hover {
-            color: blue
+            color: blue;
         }
 
         .cursor {
-            cursor: pointer
+            cursor: pointer;
         }
 
         .textarea {
-            resize: none
+            resize: none;
         }
 
         .content, .user {
@@ -44,7 +44,7 @@
             border-radius: 12px;
         }
 
-        .comment-level-1{
+        .comment-level-1 {
             border-bottom: 1px solid gray;
         }
 
@@ -57,6 +57,20 @@
             padding: 10px;
             margin: 10px 0;
             border-radius: 12px;
+        }
+
+        .admin-wrap-btn {
+            padding: 10px 0;
+        }
+
+        .admin-btn {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 10px;
+            cursor: pointer;
         }
     </style>
 </asp:Content>
@@ -98,6 +112,10 @@
                             </div>
                             <div class="col-9">
                                 <div class="content">
+                                    <div id="forAdmin" runat="server" class="admin-wrap-btn">
+                                        <asp:Button ID="aprovide" OnClick="aprovide_Click" runat="server" Text="Duyệt" CssClass="admin-btn" />
+                                        <asp:Button ID="notaprovide" OnClick="notaprovide_Click" runat="server" Text="Bỏ duyệt" CssClass="admin-btn" />
+                                    </div>
                                     <asp:Repeater ID="RptBlog" runat="server" OnItemDataBound="RptBlog_ItemDataBound">
                                         <ItemTemplate>
                                             <%--<asp:HiddenField ID="hdfBlogID" runat="server" Value='<%#Eval("iId")%>' />--%>

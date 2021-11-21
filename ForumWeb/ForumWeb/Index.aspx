@@ -60,6 +60,21 @@
             border-radius: 24px 6px 6px 24px;
             float: right;
         }
+
+        .admin-wrap-btn{
+            text-align: right;
+            padding: 10px;
+        }
+
+        .admin-btn{
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 10px;
+            cursor: pointer;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -111,10 +126,15 @@
                         <asp:ScriptManager runat="server" ID="sm" />
                         <asp:UpdatePanel runat="server" ID="updatePanel">
                             <contenttemplate>
+                                <div id="forAdmin" runat="server" class="admin-wrap-btn">
+                                    <asp:Button ID="aprovide" OnClick="aprovide_Click" runat="server" Text="Đã duyệt" CssClass="admin-btn" />
+                                    <asp:Button ID="notaprovide" OnClick="notaprovide_Click" runat="server" Text="Chưa duyệt" CssClass="admin-btn" />
+                                </div>
                                 <div class="content">
                                     <asp:Repeater ID="RptBlog" runat="server" OnItemDataBound="RptBlog_ItemDataBound">
                                         <itemtemplate>
                                             <div class="blog-item">
+                                                <span id="txtIsAprovide" style="color: red;" runat="server"></span>
                                                 <div style="float: left">
                                                     <asp:Image ID="imgAvatar" runat="server" ImageUrl="UserAvt/default_avt.svg" CssClass="avatar" />
                                                 </div>

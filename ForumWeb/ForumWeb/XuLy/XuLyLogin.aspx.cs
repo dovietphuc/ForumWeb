@@ -23,7 +23,6 @@ namespace ForumWeb.XuLy
                 if (user != null)
                 {
                     Application["user"] = user;
-                    Session["user"] = user;
                     Response.Redirect("../Index.aspx");
                     return;
                 }

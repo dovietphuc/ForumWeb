@@ -41,10 +41,11 @@ namespace ForumWeb.XuLy
 
             string query = "INSERT INTO [dbo].[User]"
             + " ([sUserName]"
-            + " ,[sHashedPassword])"
+            + " ,[sHashedPassword]"
+            + " ,[iPermissionId])"
             + " VALUES"
             + " (@sUserName"
-            + " , @sHashedPassword)";
+            + " , @sHashedPassword, " + getNormalPermissionId() + ")";
             SqlConnection connection = DBConnection.getConnection();
             SqlCommand sqlCommand = connection.CreateCommand();
             sqlCommand.CommandText = query;
@@ -65,6 +66,21 @@ namespace ForumWeb.XuLy
             sqlCommand.Parameters.AddWithValue("@username", username);
             int i = new SqlDataAdapter(sqlCommand).Fill(new DataSet());
             return i > 0;
+        }
+
+        public int getNormalPermissionId()
+        {
+            string query = "SELECT [iId],[sName],[sDescription] FROM [dbo].[Permission] WHERE sName like N'Normal'";
+            SqlConnection connection = DBConnection.getConnection();
+            SqlCommand sqlCommand = connection.CreateCommand();
+            sqlCommand.CommandText = query;
+            DataTable tb = new DataTable();
+            int i = new SqlDataAdapter(sqlCommand).Fill(tb);
+            if(i > 0)
+            {
+                return Int32.Parse(tb.Rows[0]["iId"].ToString());
+            }
+            return -1;
         }
     }
 }
