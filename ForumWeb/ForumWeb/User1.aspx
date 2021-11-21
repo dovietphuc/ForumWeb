@@ -19,6 +19,7 @@
                                             <th scope="col"># Id</th>
                                             <th scope="col">User name</th>
                                             <th scope="col">Created date </th>
+                                            <th scope="col">Role </th>
                                             <th scope="col">Trạng thái</th>
 
                                         </tr>
@@ -31,6 +32,7 @@
                                     <th scope="row"><%#Eval("iId")%></th>
                                     <td><%#Eval("sUserName")%></td>
                                     <td><%#Eval("dCreatedDate")%></td>
+                                    <td><%#Eval("iPermissionId").ToString()=="1"?"admin":"user"%></td>
                                     <td>
                                         <asp:LinkButton
                                             Tagkey='<%#Eval("iId")%>'
