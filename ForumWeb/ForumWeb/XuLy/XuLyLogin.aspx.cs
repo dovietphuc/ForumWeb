@@ -22,10 +22,20 @@ namespace ForumWeb.XuLy
                 User user = tryLogin(username, pwd);
                 if (user != null)
                 {
-                    Application["user"] = user;
-                    Session["user"] = user;
-                    Response.Redirect("../Index.aspx");
-                    return;
+                    if(user.Status == 1)
+                    {
+                        Application["user"] = user;
+                        Session["user"] = user;
+                        Response.Redirect("../Index.aspx");
+                        return;
+                    }
+                    else
+                    {
+                        Response.Redirect("../Login.aspx?err=0");
+                        return;
+
+                    }
+
                 }
                 else
                 {
@@ -59,6 +69,8 @@ namespace ForumWeb.XuLy
                 user.Phone = dataTable.Rows[0]["sPhone"].ToString();
                 user.CreateTime = (DateTime)dataTable.Rows[0]["dCreatedDate"];
                 user.Avatar = dataTable.Rows[0]["sAvatarUrl"].ToString();
+                user.Status = (int)dataTable.Rows[0]["iStatus"];
+                user.role = (int)dataTable.Rows[0]["iPermissionId"];
                 return user;
             }
             return null;

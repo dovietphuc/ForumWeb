@@ -14,6 +14,10 @@ namespace ForumWeb
             Application["user"] = null;
             bool isErr = Request.QueryString["err"] != null ? Request.QueryString["err"].Equals("1") : false;
             err.Visible = isErr;
+
+            bool isLock = Request.QueryString["err"] != null ? Request.QueryString["err"].Equals("0") : false;
+            lock1.Visible = isLock;
+
             bool registSuccess = Request.QueryString["registSuccess"] != null ? Request.QueryString["registSuccess"].Equals("1") : false;
             success.Visible = registSuccess;
         }

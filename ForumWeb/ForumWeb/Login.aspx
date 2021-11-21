@@ -6,6 +6,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <form id="form1" action="XuLy/XuLyLogin.aspx" runat="server" method="post" class="box">
         <h2>Đăng nhập</h2>
+        <span runat="server" id="lock1" style="color: red;">Tài khoản của bạn đang bị khóa vui lòng liên hệ với admin</span>
         <span runat="server" id="err" style="color: red;">Đăng nhập không thành công</span>
         <span runat="server" id="success" style="color: green;">Đăng ký thành công</span>
         <div class="login">
